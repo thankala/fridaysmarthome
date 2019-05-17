@@ -1,0 +1,77 @@
+{{!-- {{#if errors}}
+{{#each errors}}
+<div class="alert alert-warning alert-dismissible fase show" role="alert">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    {{this.msg}}
+</div>
+{{/each}}
+{{/if}} --}}
+
+{{!-- {{#if errors }}
+{{#each errors}}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  {{this.msg}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{{/each}}
+{{/if}} --}}
+
+{{!-- 
+{{#if errors}}
+{{#each errors}}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <strong>Holy guacamole!</strong> You should check in on some of those fields below.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{{/each}}
+{{/if}} --}}
+
+{{!-- 
+
+{{#ifCond error_msg '!=' ''}}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  {{error_msg}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{{/ifCond}}
+
+{{#ifCond error '!=' ''}}
+<div class="alert alert-warning alert-dismissible fade show" role="alert">
+  {{error}}
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+{{/ifCond}}
+ --}}
+
+
+{{#if errors}}
+{{#each errors}}
+<div class="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+  {{this.msg}}
+</div>
+{{/each}}
+{{/if}}
+
+ 
+{{#ifCond error_msg '!=' ''}}
+<div class="alert">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+  {{error_msg}}
+</div>
+{{/ifCond}}
+
+{{#ifCond success_msg '!=' ''}}
+<div class="success">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+  {{success_msg}}
+</div>
+{{/ifCond}}

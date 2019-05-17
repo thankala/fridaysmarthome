@@ -1,0 +1,16 @@
+<div id="logo-container">
+    <button id="openNav" class="w3-button w3-teal w3-xlarge" onclick="toggleNav()"><i class="fas fa-bars"
+            id="fa"></i></button>
+    <a id="logo" href="/"><img src="/images/hero_logo.png"></a>
+</div>
+
+<div id="menu">
+    {{#if sessionedRender}}
+        <a href="/account" id="account_logo"><i class="fa fa-user-circle-o" aria-hidden="true"></i>&ensp;<span
+            id="account_content">{{fname}}</span></a>
+        <a href="/logout" id="log_out_button">Log Out</a>    
+    {{else}}
+    <a href="/login" id="log_in_button">Log in</a>
+    <a href="/register" id="sign_up_button">Sign up</a>
+    {{/if}}
+</div>

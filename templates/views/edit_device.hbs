@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Smart Home Application</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Friday | Smart Home Application">
+    <link rel="shortcut icon" type="image/png" href="/images/favicon.png" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Passion+One">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/mobile.css">
+    <link rel="stylesheet" type="text/css" href="/css/add_device_style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+
+    <script src="/js/scripts.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <!-- <script src="js/logging.js"></script> -->
+    <script src="/js/edit_device.js"></script>
+    {{!-- <script>
+        $(document).ready(function () {
+            $('#delete').click(function () {
+                const urlParams = new URLSearchParams(window.location.search)
+                $.get('/devices/delete/?id=' + {{ deviceID }} + '&category=' + {{ category }}, function (data, status) {
+                })
+            })
+        })
+
+    </script> --}}
+
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<body>
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+    <nav id="top-bar">
+
+        {{>menu}}
+
+    </nav>
+
+    <div class="content" style="background-color: #343434;">
+        <div id="sidebar">
+            {{>sidebar}}
+        </div>
+    </div>
+    <div id="main">
+        <div class='section_1'>
+            <div class="container">
+                <form class="form_container" action="/devices/delete/?id={{deviceID}}&category={{category}}"
+                    method="POST">
+                    <h1 style="text-transform: capitalize" >Device: {{deviceType}} {{deviceName}}</h1>
+
+                    <h3>Change Device</h3>
+                    {{!-- <h4 id="deviceID">Device ID : {{deviceID}}</h4>
+                    <hr>
+                    <h4>Username : {{username}}</h4>
+                    <hr> --}}
+                    <select class="device_option" name="option">
+
+                        {{!-- {{>add_device_options}} --}}
+
+                        {{#if rooms}}
+                        {{#each rooms}}
+                        {{#ifCond roomType '==' 'livingroom'}}
+                        <option value={{roomID}}>&#xf26c; &ensp; {{roomName}} {{roomLongName}}</option>
+                        {{/ifCond}}
+                        {{#ifCond roomType '==' 'bedroom'}}
+                        <option value={{roomID}}>&#xf236; &ensp; {{roomName}} {{roomLongName}}</option>
+                        {{/ifCond}}
+                        {{#ifCond roomType '==' 'kitchenroom'}}
+                        <option value={{roomID}}>&#xf000; &ensp; {{roomName}} {{roomLongName}}</option>
+                        {{/ifCond}}
+                        {{#ifCond roomType '==' 'bathroom'}}
+                        <option value={{roomID}}>&#xf2cd; &ensp; {{roomName}} {{roomLongName}}</option>
+                        {{/ifCond}}
+                        {{#ifCond roomType '==' 'gardenroom'}}
+                        <option value={{roomID}}>&#xf1bb; &ensp; {{roomName}} {{roomLongName}}</option>
+                        {{/ifCond}}
+                        {{#ifCond roomType '==' 'otherroom'}}
+                        <option value={{roomID}}>&#xf0c1; &ensp; {{roomName}} {{roomLongName}}</option>
+                        {{/ifCond}}
+                        {{/each}}
+                        {{/if}}
+                    </select>
+
+
+                    <h3>Add name <i style="font-size:0.7em">(Optional)</i></h3>
+                    <input type="text" id="comment" name="name" placeholder="Your device name">
+
+
+                    <!-- <img src="images/youtube_emb.png"  style="width:60%; margin:0 20% 0 20%;"> -->
+                    <!-- <img src="images/youtube_emb.png"  style="width:300px;"> -->
+
+                    {{#ifCond deviceType '==' 'camera'}}
+                    <h3>Add api <i style="font-size:0.7em">(Only for cameras)</i> <a style="float:right; color: #8BC34A"
+                            href="http://prntscr.com/neq3nv" target="_blank"><i class="fa fa-info-circle"
+                                aria-hidden="true"></i></a></h3>
+                    <input type="text" id="camera_link" name="camera_link" placeholder="Example: DL9X5u-wDgw">
+                    {{/ifCond}}
+
+                    <p><button id="delete" style=" background:red">Delete</button></p>
+                    <p><button type="submit"
+                            formaction="/devices/update/?id={{deviceID}}&category={{category}}">Update</button></p>
+
+                </form>
+
+            </div>
+
+        </div>
+        {{>footer_mini}}
+
+    </div>
+
+</body>
+
+</html>

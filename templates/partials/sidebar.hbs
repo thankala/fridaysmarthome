@@ -1,0 +1,16 @@
+<div class="sidebar_nav">
+    <a href="/" style="background-color: #00000029;"><i class="fa fa-home"> </i>&ensp;Home</a>
+    {{#if sessionedRender}}
+    <a id="dashboard" href="/dashboard"><i class="fa fa-sliders"></i>&ensp;Dashboard</a>
+    <a id="rooms" href="/rooms"><i class="fa fa-bed"></i>&ensp;Rooms</a>
+    <a id="devices" href="/devices"><i class="fa fa-plug"></i>&ensp;Devices</a>
+    <a id="cameras" href="/cameras"><i class="fa fa-video-camera"></i>&ensp;Cameras</a>
+    <a id="history" href="/history"><i class="fa fa-history"></i>&ensp;History</a>
+    <a href="/logout"><i class="fa fa-sign-out" aria-hidden="true"></i>&ensp;Sign Out</a>
+
+    {{/if}}
+    <a href="/#about"><i class="fa fa-info-circle"></i>&ensp;About</a>
+    <a href="/#services"><i class="fa fa-cubes"></i>&ensp;Services</a>
+    <a href="/#team"><i class="fa fa-address-card"></i>&ensp;Team</a>
+    <a href="/#contact"><i class="fa fa-envelope"></i>&ensp;Contact</a>
+</div>

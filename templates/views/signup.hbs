@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Smart Home Application</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Friday | Smart Home Application">
+    <link rel="shortcut icon" type="image/png" href="/images/favicon.png" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Passion+One">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/mobile.css">
+    <link rel="stylesheet" type="text/css" href="/css/signup_style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+
+    <script src="/js/scripts.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/js/top_bar_scrolling.js"></script>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<body>
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+    <nav id="top-bar">
+
+        {{>menu}}
+
+    </nav>
+
+    <div class="content" style="background-color: #343434;">
+        <div id="sidebar">
+            {{>sidebar}}
+        </div>
+    </div>
+    <div id="main">
+
+
+
+        <div class='section_1'>
+            <div class="contact_wrapper">
+                <div class="screen">
+                    <div class="screen-header">
+                        <div class="screen-header-left">
+                            <div class="screen-header-button close"></div>
+                            <div class="screen-header-button maximize"></div>
+                            <div class="screen-header-button minimize"></div>
+                        </div>
+                        <div class="screen-header-right">
+                            <div class="screen-header-ellipsis"></div>
+                            <div class="screen-header-ellipsis"></div>
+                            <div class="screen-header-ellipsis"></div>
+                        </div>
+                    </div>
+                    <div class="signup-app-title">
+                        <span>Sign Up Form</span>
+                        {{>messages}}
+                    </div>
+                    <div class="signup-screen-body">
+                        <div class="signup-screen-body-item">
+                            <form class="signup-form" action="/register" method="POST">
+                                <div class="signup-form-group">
+                                    {{#ifCond fname '||' lname}}
+                                    <input type="fname" name="fname" class="signup-form-control-name" value={{fname}}
+                                        placeholder="First Name" autocomplete="given-name">
+                                    <input type="lname" name="lname" class="signup-form-control-name" value={{lname}}
+                                        placeholder="Last Name" autocomplete="family-name">
+                                    {{else}}
+                                    <input type="fname" name="fname" class="signup-form-control-name"
+                                        placeholder="First Name" autocomplete="given-name">
+                                    <input type="lname" name="lname" class="signup-form-control-name"
+                                        placeholder="Last Name" autocomplete="family-name">
+                                    {{/ifCond}}
+                                </div>
+                                <div class="signup-form-group message">
+                                    {{#if email}}
+                                    <input type="email" name="email" class="signup-form-control" placeholder="Email"
+                                        value={{email}} autocomplete="mail">
+                                    {{else}}
+                                    <input type="email" name="email" class="signup-form-control" placeholder="Email"
+                                        autocomplete="mail">
+                                    {{/if}}
+                                </div>
+                                <div class="signup-form-group message">
+                                    {{#if username}}
+                                    <input class="signup-form-control" name="username" type="username"
+                                        placeholder="Username" value={{username}} required autocomplete="username">
+                                    {{else}}
+                                    <input class="signup-form-control" name="username" type="username"
+                                        placeholder="Username" autocomplete="username">
+                                    {{/if}}
+                                </div>
+                                <div class="signup-form-group message">
+                                    <input class="signup-form-control" type="password" name="password" placeholder="Password">
+                                </div>
+                                <div class="signup-form-group message">
+                                    <input class="signup-form-control" type="password" name="password2" placeholder="Retype Password">
+                                </div>
+                                <div class="signup-form-group buttons">
+                                    <button type="submit" class="signup-form-button">SIGN UP</button>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{>footer}}
+
+    </div>
+    </div>
+
+
+
+</body>
+
+</html>

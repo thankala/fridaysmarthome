@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Smart Home Application</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Friday | Smart Home Application">
+    <link rel="shortcut icon" type="image/png" href="/images/favicon.png" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Passion+One">
+
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/mobile.css">
+    <link rel="stylesheet" type="text/css" href="/css/signup_style.css">
+    <link rel="stylesheet" type="text/css" href="/css/account_page_style.css">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+
+    <script src="/js/scripts.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/js/top_bar_scrolling.js"></script>
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<body>
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+    <nav id="top-bar">
+
+        {{>menu}}
+
+    </nav>
+
+    <div class="content" style="background-color: #343434;">
+        <div id="sidebar">
+            {{>sidebar}}
+        </div>
+    </div>
+    <div id="main">
+        <div class='section_1' style="height: auto;">
+            <div class="contact_wrapper">
+                <div class="screen">
+                    <div class="screen-header">
+                        <div class="screen-header-left">
+                            <div class="screen-header-button close"></div>
+                            <div class="screen-header-button maximize"></div>
+                            <div class="screen-header-button minimize"></div>
+                        </div>
+                        <div class="screen-header-right">
+                            <div class="screen-header-ellipsis"></div>
+                            <div class="screen-header-ellipsis"></div>
+                            <div class="screen-header-ellipsis"></div>
+                        </div>
+                    </div>
+                    <div class="app-title" style="text-align:center">
+                        <span>Account</span>
+                    </div>
+                    {{>messages}}
+                    <div class="signup-screen-body">
+
+                        <!-- Here starts the form -->
+                        <div class="img_container"><img src="/images/person.jpg"></div>
+                        <div class="signup-screen-body-item">
+                            <div class="signup-form">
+                                <div class="signup-form-group">
+                                    <h6 class="signup-form-control-name">Name: <span id="name">{{fname}}</span>
+                                    </h6>
+                                    <h6 class="signup-form-control-name">Surname <span id="lastname">{{lname}}</span>
+                                    </h6>
+                                </div>
+                                <div class="signup-form-group">
+                                    <h6 class="signup-form-control-name">Username: <span
+                                            id="username">{{username}}</span>
+                                    </h6>
+                                    <h6 class="signup-form-control-name">Number of rooms: <span
+                                            id="Nrooms">{{numOfRooms}}</span>
+                                    </h6>
+                                </div>
+                                <div class="signup-form-group">
+                                    <h6 class="signup-form-control-name">Email: <span id="mail">
+                                            {{email}}</span></h6>
+                                    <h6 class="signup-form-control-name">Number of devices: <span
+                                            id="Nrooms">{{numOfDevices}}</span>
+                                    </h6>
+                                </div>
+                                <div class="signup-form-group">
+                                    <h6 class="signup-form-control-name">Member since: <span id="member_since">
+                                            {{registerDate}}</span></h6>
+                                    <h6 class="signup-form-control-name">Number of cameras: <span id="Nrooms">{{numOfCameras}}</span>
+                                    </h6>
+                                </div>
+                                <div class="signup-form-group buttons">
+                                    <a href="/account/edit"><button class="signup-form-button">EDIT</button></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        {{>footer}}
+
+
+    </div>
+    </div>
+
+
+
+</body>
+
+</html>

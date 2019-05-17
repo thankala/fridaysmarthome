@@ -1,0 +1,144 @@
+<div class="room-container">
+    <h2>{{roomType}}</h2>
+    {{#if roomName}}
+    <h3>{{roomName}}</h3>
+    {{/if}}
+    <p style="text-align: center;margin-bottom: 30px;"><a href="delete/?id={{roomID}}"
+            style="padding: 10px;background: red;color: white;border-radius: 50px;">Delete room </a></p>
+    <hr class="separator">
+    {{>messages}}
+    <div class="device_section">
+        <h3>
+            Lights
+        </h3>
+
+        <div class="device_container">
+            {{#if devices}}
+            {{#each devices}}
+            {{#ifCond deviceType '==' 'light'}}
+            <a href="/devices/edit/?id={{deviceID}}&category={{category}}">
+                <div class="device" id={{deviceID}}>
+                    <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+                    <p>Light {{deviceName}}</p>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </a>
+            {{/ifCond}}
+            {{/each}}
+            {{/if}}
+            <a href="/devices/add/?deviceType=light&category={{category}}">
+                <div class="device" id="add_device">
+                    <p>Add light</p>
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="device_section">
+        <h3>
+            Sockets
+        </h3>
+        <div class="device_container">
+            {{#if devices}}
+            {{#each devices}}
+            {{#ifCond deviceType '==' 'socket'}}
+            <a href="/devices/edit/?id={{deviceID}}&category={{category}}">
+                <div class="device" id="{{deviceID}}">
+                    <i class="fa fa-plug" aria-hidden="true"></i>
+                    <p>Socket {{deviceName}}</p>
+                    <label class="switch">
+                        <input type="checkbox">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </a>
+            {{/ifCond}}
+            {{/each}}
+            {{/if}}
+            <a href="/devices/add/?deviceType=socket&category={{category}}">
+                <div class="device" id="add_device">
+                    <p>Add Socket</p>
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!-- Cameras-->
+    <div class="device_section">
+        <h3>
+            Cameras
+        </h3>
+        <div class="device_container">
+            {{#if devices}}
+            {{#each devices}}
+            {{#ifCond deviceType '==' 'camera'}}
+            <a href="/devices/edit/?id={{deviceID}}&category={{category}}">
+                <div class="device">
+                    <i class="fa fa-video-camera" aria-hidden="true"></i>
+                    <p>Camera {{deviceName}}</p>
+                </div>
+            </a>
+            {{/ifCond}}
+            {{/each}}
+            {{/if}}
+            <a href="/devices/add/?deviceType=camera&category={{category}}">
+                <div class="device" id="add_device">
+                    <p>Add Camera</p>
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+
+
+    <!-- Miscellaneous-->
+    <div class="device_section">
+        <h3>
+            Miscellaneous
+        </h3>
+        <div class="device_container">
+            {{#if devices}}
+            {{#each devices}}
+            {{#ifCond deviceType '==' 'thermometer'}}
+            <a href="/devices/edit/?id={{deviceID}}&category={{category}}">
+                <div class="device" id="{{deviceID}}">
+                    <i class="fa fa-thermometer-three-quarters" aria-hidden="true"></i>
+                    <p>Thermometer {{deviceName}}</p>
+                    <p>30 &#8451;</p>
+                </div>
+            </a>
+            {{/ifCond}}
+
+            {{#ifCond deviceType '==' 'hsensor'}}
+            <a href="/devices/edit/?id={{deviceID}}&category={{category}}">
+                <div class="device" id="{{deviceID}}">
+                    <i class="fa fa-tint" aria-hidden="true"></i>
+                    <p>Humidity Sensor {{deviceName}}</p>
+                    <p>67%</p>
+                </div>
+            </a>
+            {{/ifCond}}
+
+            {{#ifCond deviceType '==' 'rainsensor'}}
+            <a href="/devices/edit/?id={{deviceID}}&category={{category}}">
+                <div class="device">
+                    <i class="fa fa-tint" aria-hidden="true"></i>
+                    <p>Raindrop Sensor {{deviceName}}</p>
+
+                </div>
+            </a>
+            {{/ifCond}}
+            {{/each}}
+            {{/if}}
+            <a href="/devices/add/?deviceType=other&category={{category}}">
+                <div class="device" id="add_device">
+                    <p>Add</p>
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

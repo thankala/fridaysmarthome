@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Smart Home Application</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Friday | Smart Home Application">
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Passion+One">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/mobile.css">
+    <link rel="stylesheet" type="text/css" href="/css/cameras_style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+
+    <script src="/js/scripts.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<body>
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+    <nav id="top-bar">
+
+        {{>menu}}
+
+    </nav>
+
+    <div class="content" style="background-color: #343434;">
+        <div id="sidebar">
+            {{>sidebar}}
+        </div>
+    </div>
+    <div id="main">
+        <div class='section_1'>
+
+            <div class="cameras-container">
+                <h2>Cameras</h2>
+                <hr class="separator">
+                <div class="camera_flexbox">
+                    {{#if cameras}}
+                    {{#each cameras}}
+                    <div class="camera_box">
+                        <h4>{{name}} {{longName}}</h4>
+
+                    </div>
+                    {{/each}}
+                    {{/if}}
+                    {{!-- <div class="camera_box">
+                        <h4>Camera 2 - Maria's Bedroom</h4>
+                    </div>
+                    <div class="camera_box">
+                        <h4>Camera 3 - Kitchen</h4>
+                    </div>
+                    <div class="camera_box">
+                        <h4>Camera 4 - Garden</h4>
+                    </div>
+                    <!-- <div class="camera_box">
+                        <h4>Camera 5</h4>
+                    </div> --> --}}
+
+                    <a href="/devices/add/?deviceType=camera&category=/cameras" class="camera_box">
+                        <div>
+                            <div class="group_elements">
+                                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                                <h3 style="font-size:0.7em;">Add camera</h3>
+                            </div>
+                        </div>
+                    </a>
+
+                </div>
+
+
+            </div>
+            {{>footer_mini}}
+
+
+
+        </div>
+
+</body>
+
+</html>

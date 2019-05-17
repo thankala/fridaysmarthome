@@ -1,0 +1,17 @@
+{{#if users}}
+{{#each users}}
+<tr>
+    <td>{{userID}}</td>
+    <td>{{username}}</td>
+    <td>{{fname}}</td>
+    <td>{{lname}}</td>
+    <td>{{email}}</td>
+    <td>{{registerDate}}</td>
+    <td>{{lastLogIn}}</td>
+    <td>Fix this</td>
+    <td>{{numOfRooms}}</td>
+    <td>{{numOfDevices}}</td>
+    <td><a href="/users/delete/?id={{userID}}" class="button" id="delete_button">Delete</a></td>
+</tr>
+{{/each}}
+{{/if}}

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Smart Home Application</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Friday | Smart Home Application">
+    <link rel="shortcut icon" type="image/png" href="/images/favicon.png" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Passion+One">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/mobile.css">
+    <link rel="stylesheet" type="text/css" href="/css/admin_page_style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+
+    <script src="/js/scripts.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<body>
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+    <nav id="top-bar">
+
+        {{>menu}}
+
+    </nav>
+
+    <div class="content" style="background-color: #343434;">
+        <div id="sidebar">
+            {{>sidebar}}
+        </div>
+    </div>
+    <div id="main">
+        <div class='section_1'>
+            <h2>Admin page</h2>
+            <hr class="separator">
+            {{>messages}}
+            <div class="admin_page_container">
+                <div class="account_box">
+                    <div class="account_box_inside">
+                        <img src="/images/person.jpg">
+                        <div class="group_info">
+                            <h3 id="fullname">{{fname}}{{lname}}</h3>
+                            <p id="username">Username: <span style="font-style: italic;">{{username}}</span></p>
+                            <p id="user_email">E-mail: <span style="font-style: italic;">{{email}}</span></p>
+                            <p id="Allusers">Number of users: <span style="font-style: italic;">{{numOfUsers}}</span>
+                            </p>
+                            <p id="Allrooms">Number of rooms: <span style="font-style: italic;">{{numOfRooms}}</span>
+                            </p>
+                            <p id="Alldevices">Number of devices: <span
+                                    style="font-style: italic;">{{numOfDevices}}</span></p>
+
+                            <button><a href="/account/edit">Edit</a></button>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <h3>Users</h3>
+                <hr class="separator">
+
+                <!-- Script for search box -->
+                <script>
+                    function search_on_users() {
+                        var input, filter, table, tr, td, i, txtValue;
+                        input = document.getElementById("search_box_input");
+                        filter = input.value.toUpperCase();
+                        table = document.getElementById("users_table");
+                        tr = table.getElementsByTagName("tr");
+                        for (i = 0; i < tr.length; i++) {
+                            td = tr[i].getElementsByTagName("td")[1];
+                            if (td) {
+                                txtValue = td.textContent || td.innerText;
+                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    }
+                </script>
+
+                <div class="users_table_container">
+                    <table id="users_table">
+                        <tr style="    background: black;">
+                            <th colspan="11">
+                                <form class="search_form">
+                                    <input type="text" id="search_box_input" name="search"
+                                        placeholder="Search user by username.." onkeyup="search_on_users()">
+                                </form>
+                            </th>
+                        </tr>
+
+                        <tr>
+                            <th>User ID</th>
+                            <th>Username</th>
+                            <th>First Name</th>
+                            <th>Last name</th>
+                            <th>Email</th>
+                            <th>Sign up date</th>
+                            <th>Last time logged in</th>
+                            <th>Status</th>
+                            <th>Rooms</th>
+                            <th>Devices</th>
+                            <th>Delete</th>
+                        </tr>
+                        {{>partial}}
+                    </table>
+                </div>
+
+                <h3>Messages</h3>
+                <hr class="separator">
+
+                <!-- Script for search box -->
+                <script>
+                    function search_on_messages() {
+                        var input, filter, table, tr, td, i, txtValue;
+                        input = document.getElementById("search_box_input_messages");
+                        filter = input.value.toUpperCase();
+                        table = document.getElementById("table_messages");
+                        tr = table.getElementsByTagName("tr");
+                        for (i = 0; i < tr.length; i++) {
+                            td = tr[i].getElementsByTagName("td")[3];
+                            if (td) {
+                                txtValue = td.textContent || td.innerText;
+                                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                                    tr[i].style.display = "";
+                                } else {
+                                    tr[i].style.display = "none";
+                                }
+                            }
+                        }
+                    }
+                </script>
+
+                <div class="messages_table_container">
+
+                    <table id="table_messages">
+                        <tr style="    background: black;">
+                            <th colspan="6">
+                                <form class="search_form">
+                                    <input type="text" id="search_box_input_messages" name="search"
+                                        placeholder="Search messages by email.." onkeyup="search_on_messages()">
+                                </form>
+                            </th>
+                        </tr>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Username</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Date</th>
+                            <th>Message</th>
+                        </tr>
+                        {{>contactPartial}}
+                        
+
+                    </table>
+
+
+                </div>
+
+
+
+            </div>
+
+        </div>
+
+        {{>footer_mini}}
+
+
+    </div>
+
+
+
+</body>
+
+</html>

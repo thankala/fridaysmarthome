@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Smart Home Application</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Friday | Smart Home Application">
+    <link rel="shortcut icon" type="image/png" href="/images/favicon.png" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Passion+One">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/mobile.css">
+    <link rel="stylesheet" type="text/css" href="/css/add_device_style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+
+    <script src="/js/scripts.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- <script src="js/logging.js"></script> -->
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<body>
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+    <nav id="top-bar">
+
+        {{>menu}}
+
+    </nav>
+
+    <div class="content" style="background-color: #343434;">
+        <div id="sidebar">
+            {{>sidebar}}
+        </div>
+    </div>
+    <div id="main">
+        <div class='section_1'>
+            <div class="container">
+                <form class="form_container" action="/devices/add/?category={{category}}" method="POST">
+                    <h1>Select Your Device</h1>
+
+                    <select class="device_option" name="option" id="select_device">
+
+                        <option value="" disabled selected>Devices</option>
+                        {{!-- {{#if deviceType}} --}}
+
+                        <option value="light" {{#ifCond deviceType '==' 'light'}} selected {{/ifCond}}>&#xf0eb; &ensp;
+                            Light</option>
+                        <option value="socket" {{#ifCond deviceType '==' 'socket'}} selected {{/ifCond}}>&#xf1e6; &ensp;
+                            Socket</option>
+                        <option value="camera" {{#ifCond deviceType '==' 'camera'}} selected {{/ifCond}}>&#xf03d; &ensp;
+                            Camera</option>
+                        <option value="thermometer" {{#ifCond deviceType '==' 'thermometer'}} selected {{/ifCond}}>
+                            &#xf2c8;
+                            &ensp; Thermometer</option>
+                        <option value="hsensor" {{#ifCond deviceType '==' 'hsensor'}} selected {{/ifCond}}>&#xf043;
+                            &ensp; Humidity sensor</option>
+                        <option value="rainsensor {{#ifCond deviceType '==' 'rainsensor'}} selected {{/ifCond}}">
+                            &#xf0c2; &ensp; Raindrop Sensor</option>
+                        <optgroup label="Other...Select type:">
+                            <option value="othersensor" {{#ifCond deviceType '==' 'othersensor'}} selected {{/ifCond}}>
+                                &#xf2c8; &ensp; Sensor</option>
+                            <option value="otherdevice" {{#ifCond deviceType '==' 'otherdevice'}} selected {{/ifCond}}>
+                                &#xf0eb; &ensp; Device</option>
+                        </optgroup>
+                    </select>
+
+                    <!-- <script>
+                        if (document.getElementById("select_device").selectedIndex == "2"){
+                            console.log("hiii")
+                        }
+                    </script> -->
+
+                    <h3>Select room</h3>
+                    <select class="device_option" name="option">
+
+                        <option value="" disabled selected>Rooms</option>
+                        {{!-- {{>add_device_options}} --}}
+                        {{#if rooms}}
+                        {{#each rooms}}
+                        {{#ifCond roomType '==' 'livingroom'}}
+                        <option value={{roomID}}>&#xf26c; &ensp; {{roomName}} {{roomLongName}}</option>
+                        {{/ifCond}}
+                        {{#ifCond roomType '==' 'bedroom'}}
+                        <option value={{roomID}}>&#xf236; &ensp; {{roomName}} {{roomLongName}}</option>
+                        {{/ifCond}}
+                        {{#ifCond roomType '==' 'kitchenroom'}}
+                        <option value={{roomID}}>&#xf000; &ensp; {{roomName}} {{roomLongName}}</option>
+                        {{/ifCond}}
+                        {{#ifCond roomType '==' 'bathroom'}}
+                        <option value={{roomID}}>&#xf2cd; &ensp; {{roomName}} {{roomLongName}}</option>
+                        {{/ifCond}}
+                        {{#ifCond roomType '==' 'gardenroom'}}
+                        <option value={{roomID}}>&#xf1bb; &ensp; {{roomName}} {{roomLongName}}</option>
+                        {{/ifCond}}
+                        {{#ifCond roomType '==' 'otherroom'}}
+                        <option value={{roomID}}>&#xf0c1; &ensp; {{roomName}} {{roomLongName}}</option>
+                        {{/ifCond}}
+                        {{/each}}
+                        {{/if}}
+                    </select>
+
+
+                    <h3>Name <i style="font-size:0.7em">(Optional)</i></h3>
+                    <input type="text" id="comment" name="name" placeholder="Your device name">
+
+                    <h3>Add api <i style="font-size:0.7em">(Only for cameras)</i> <a style="float:right; color: #8BC34A"
+                            href="http://prntscr.com/neq3nv" target="_blank"><i class="fa fa-info-circle"
+                                aria-hidden="true"></i></a></h3>
+                    <!-- <img src="images/youtube_emb.png"  style="width:60%; margin:0 20% 0 20%;"> -->
+                    <!-- <img src="images/youtube_emb.png"  style="width:300px;"> -->
+                    <input type="text" id="camera_link" name="camera_link" placeholder="Example: DL9X5u-wDgw">
+
+
+                    <p><button type="submit">Add</button></p>
+                </form>
+
+            </div>
+        </div>
+
+
+        {{>footer_mini}}
+
+    </div>
+
+</body>
+
+</html>

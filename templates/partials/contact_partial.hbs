@@ -1,0 +1,14 @@
+{{#if contact}}
+{{#each contact}}
+<tr>
+    <td>{{userID}}</td>
+    <td>{{username}}</td>
+    <td>{{name}}</td>
+    <td>{{email}}</td>
+    <td>{{messageDate}}</td>
+    <td>
+        {{message}}
+    </td>
+</tr>
+{{/each}}
+{{/if}}

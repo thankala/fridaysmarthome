@@ -1,0 +1,29 @@
+{
+  "name": "web_project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "start": "nodemon src/app.js -e js,hbs",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.4",
+    "express": "^4.16.4",
+    "express-mysql-session": "^2.1.0",
+    "express-session": "^1.16.0",
+    "hbs": "^4.0.4",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^1.6.5",
+    "nodemailer": "^6.1.1",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "passport-local": "^1.0.0",
+    "validator": "^10.11.0"
+  }
+}

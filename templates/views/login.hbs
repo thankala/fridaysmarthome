@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Smart Home Application</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Friday | Smart Home Application">
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Passion+One">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/mobile.css">
+    <link rel="stylesheet" type="text/css" href="/css/login_style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Oswald" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
+
+    <script src="/js/scripts.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="/js/top_bar_scrolling.js"></script>
+
+
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<body>
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+    <nav id="top-bar">
+
+        {{>menu}}
+
+    </nav>
+
+    <div class="content" style="background-color: #343434;">
+        <div id="sidebar">
+            {{>sidebar}}
+
+        </div>
+    </div>
+    <div id="main">
+
+
+
+        <div class='section_1'>
+            <div class="contact_wrapper">
+                <div class="screen">
+                    <div class="screen-header">
+                        <div class="screen-header-left">
+                            <div class="screen-header-button close"></div>
+                            <div class="screen-header-button maximize"></div>
+                            <div class="screen-header-button minimize"></div>
+                        </div>
+                        <div class="screen-header-right">
+                            <div class="screen-header-ellipsis"></div>
+                            <div class="screen-header-ellipsis"></div>
+                            <div class="screen-header-ellipsis"></div>
+                        </div>
+                    </div>
+                    <div class="login-app-title">
+                        <span>Log In</span>
+                    </div>
+                    {{>messages}}
+                    <div class="login-screen-body">
+                        <div class="login-screen-body-item">
+                            <form class="login-form" action="{{postUrl}}" method="POST">
+                                {{#if username}}
+                                <input class="login-form-control" name="username" type="username"
+                                    placeholder={{username}} required autocomplete="username">
+                                {{else}}
+                                <input class="login-form-control" name="username" type="username" placeholder="Username"
+                                    autocomplete="username">
+                                {{/if}}
+                                <div class="login-form-group message">
+                                    <input class="login-form-control" type="password" name="password"
+                                        placeholder="Password">
+                                </div>
+                                <div class="login-form-group buttons">
+                                    <button type="sumbit" class="login-form-button">LOG IN</button>
+                                </div>
+                                <label>
+                                    <input type="checkbox" checked="checked" name="remember" id="remember"> Remember me
+                                </label>
+                                <a class='forgot' href='/recover'>Forgot your password?</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        {{>footer}}
+
+
+
+    </div>
+    </div>
+
+
+
+</body>
+
+</html>

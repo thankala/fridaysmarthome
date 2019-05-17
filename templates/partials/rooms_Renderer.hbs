@@ -1,0 +1,82 @@
+{{#if rooms}}
+{{#each rooms}}
+{{#ifCond type '==' 'bedroom'}}
+<a href="rooms/{{type}}/?id={{roomID}}">
+    <div class="room_box">
+        <div class="room_inside">
+            <div class="group_elements">
+                <i class="fa fa-bed" aria-hidden="true"></i>
+                <h3>Bedroom</h3>
+                <p>{{name}}</p>
+            </div>
+        </div>
+    </div>
+</a>
+{{/ifCond}}
+{{#ifCond type '==' 'livingroom'}}
+<a href="rooms/{{type}}/?id={{roomID}}">
+    <div class="room_box">
+        <div class="room_inside">
+            <div class="group_elements">
+                <i class="fa fa-television" aria-hidden="true"></i>
+                <h3>Living Room</h3>
+                <p>{{name}}</p>
+            </div>
+        </div>
+    </div>
+</a>
+{{/ifCond}}
+{{#ifCond type '==' 'bathroom'}}
+<a href="rooms/{{type}}/?id={{roomID}}">
+    <div class="room_box">
+        <div class="room_inside">
+            <div class="group_elements">
+                <i class="fa fa-bath" aria-hidden="true"></i>
+                <h3>Bathroom</h3>
+                <p>{{name}}</p>
+            </div>
+        </div>
+    </div>
+</a>
+{{/ifCond}}
+{{#ifCond type '==' 'gardenroom'}}
+<a href="rooms/{{type}}/?id={{roomID}}">
+    <div class="room_box">
+        <div class="room_inside">
+            <div class="group_elements">
+                <i class="fa fa-tree" aria-hidden="true"></i>
+                <h3>Garden</h3>
+                <p>{{name}}</p>
+            </div>
+        </div>
+    </div>
+</a>
+{{/ifCond}}
+{{#ifCond type '==' 'kitchenroom'}}
+<a href="rooms/{{type}}/?id={{roomID}}">
+    <div class="room_box">
+        <div class="room_inside">
+            <div class="group_elements">
+                <i class="fa fa-cutlery" aria-hidden="true"></i>
+                <h3>Kitchen</h3>
+                <p>{{name}}</p>
+            </div>
+        </div>
+    </div>
+</a>
+{{/ifCond}}
+{{#ifCond type '==' 'otherroom'}}
+<a href="rooms/{{type}}/?id={{roomID}}">
+    <div class="room_box">
+        <div class="room_inside">
+            <div class="group_elements">
+                <i class="fa fa-link" aria-hidden="true"></i>
+                <h3>Other</h3>
+                <p>{{name}}</p>
+            </div>
+        </div>
+    </div>
+</a>
+{{/ifCond}}
+{{/each}}
+{{/if}}
