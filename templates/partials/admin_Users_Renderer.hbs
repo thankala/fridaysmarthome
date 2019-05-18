@@ -10,8 +10,10 @@
     <td>{{lastLogIn}}</td>
     {{#if lastActivity}}
     <td>{{lastActivity}}</td>
+    {{else if lastLogOut}}
+    <td>{{lastLogOut}}</td>
     {{else}}
-    <td>More than a day</td>
+    <td>More than a day ago</td>
     {{/if}}
     <td>{{numOfRooms}}</td>
     <td>{{numOfDevices}}</td>

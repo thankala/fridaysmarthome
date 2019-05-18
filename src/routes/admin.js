@@ -75,19 +75,17 @@ router.get('/admin/dashboard',
                                             const { numOfRooms } = results[0]
                                             // pool.execute('SELECT username,COUNT(Rooms.roomID) AS numOfRooms,COUNT(Devices.deviceID) AS numOfDevices, users.userID,fname,lname,email,registerDate,lastLogIn FROM users LEFT JOIN Rooms ON users.userID = Rooms.userID RIGHT JOIN Devices ON users.userID = Devices.userID WHERE userType=? GROUP BY Devices.deviceID UNION SELECT username,COUNT(Rooms.roomID),COUNT(DeviceID),users.userID,fname,lname,email,registerDate,lastLogIn FROM users RIGHT JOIN Rooms ON users.userID = Rooms.userID RIGHT JOIN Devices ON users.userID=Devices.userID GROUP BY Devices.deviceID'
                                             // pool.execute('SELECT username,COUNT(DISTINCT(Rooms.roomID)) AS numOfRooms,COUNT(DISTINCT(Devices.deviceID)) as numOfDevices,users.userID,fname,lname,email,registerDate,lastLogIn from users LEFT JOIN Rooms ON users.userID = Rooms.userID LEFT JOIN Devices ON users.userID = Devices.userID WHERE userType = ? GROUP BY username;',
-                                            pool.execute('SELECT username,COUNT(DISTINCT(Rooms.roomID)) AS numOfRooms,COUNT(DISTINCT(Devices.deviceID)) as numOfDevices,users.userID,fname,lname,email,registerDate,lastLogIn,CAST(JSON_EXTRACT(data,?) AS UNSIGNED) AS lastActivity FROM users LEFT JOIN Rooms ON users.userID = Rooms.userID LEFT JOIN Devices ON users.userID = Devices.userID  LEFT JOIN sessions ON users.userID = JSON_EXTRACT(data,?) WHERE userType = ? GROUP BY username,data;',
+                                            pool.execute('SELECT username,COUNT(DISTINCT(Rooms.roomID)) AS numOfRooms,COUNT(DISTINCT(Devices.deviceID)) as numOfDevices,users.userID,fname,lname,email,registerDate,lastLogIn,lastLogOut,CAST(JSON_EXTRACT(data,?) AS UNSIGNED) AS lastActivity FROM users LEFT JOIN Rooms ON users.userID = Rooms.userID LEFT JOIN Devices ON users.userID = Devices.userID  LEFT JOIN sessions ON users.userID = JSON_EXTRACT(data,?) WHERE userType = ? GROUP BY username,data;',
                                                 ['$.lastActivity', '$.passport.user', 'user'],
                                                 (errors, results, fields) => {
                                                     for (k = 0; k < results.length; k++) {
                                                         var registerDate = getDateTime(results[k].registerDate)
                                                         var lastLogIn = getDateTime(results[k].lastLogIn)
+                                                        var lastLogOut = getDateTime(results[k].lastLogOut)
                                                         var lastActivity = getDateTime(results[k].lastActivity)
-                                                        // console.log(typeof (results[k].lastLogIn))
-                                                        // console.log(typeof (results[k].lastActivity))
                                                         results[k].registerDate = registerDate
                                                         results[k].lastLogIn = lastLogIn
-                                                        // console.log(lastActivity.toDateString())
-
+                                                        results[k].lastLogOut = lastLogOut
                                                         results[k].lastActivity = lastActivity
                                                     }
                                                     const users = results

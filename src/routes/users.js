@@ -177,7 +177,7 @@ router.get('/account',
     (req, res) => {
         const { user } = req
         const { username, userID } = user
-        req.session.lastActivity = Date.now()
+        req.session.lastActivity = Date.now().toString()
 
 
         pool.execute('SELECT * FROM users WHERE username=?', [username],
@@ -268,7 +268,8 @@ router.post('/account/edit',
 
                     /** assign our jwt to the cookie */
                     res.cookie('jwt', token, { httpOnly: true, secure: false, maxAge: 1800000 });
-                    req.session.isLoggedIn = true;
+                    req.session.lastActivity = Date.now().toString()
+                    
 
                     req.flash("success_msg", "Account Updated")
                     res.redirect('/account')
@@ -301,26 +302,32 @@ router.get('/users/delete',
     })
 
 router.get('/logout', (req, res, next) => {
-    // if (req.session) {
-    //     // delete session object
-    //     req.session.destroy((err) => {
-    //         if (err) {
-    //             return next(err);
-    //         } else {
+    const userID = req.user.userID
+    if (req.session) {
+        // delete session object
+        req.session.destroy((err) => {
+            if (err) {
+                return next(err);
+            } else {
 
-    //             res.clearCookie('jwt');
-    //             res.clearCookie('session')
-    //             req.logout();
-    //             return res.redirect('/');
+                pool.execute('UPDATE users SET lastLogOut=? WHERE userID=?', [new Date(), userID],
+                    (errors, results, fields) => {
+                        // console.log('Date added')
+                    })
 
-    //         }
-    //     });
-    // }
+                res.clearCookie('jwt');
+                res.clearCookie('session')
+                req.logout();
+                return res.redirect('/');
 
-    res.clearCookie('jwt');
-    res.clearCookie('session')
-    req.logout();
-    return res.redirect('/');
+            }
+        });
+    }
+
+    // res.clearCookie('jwt');
+    // res.clearCookie('session')
+    // req.logout();
+    // return res.redirect('/');
 });
 
 
