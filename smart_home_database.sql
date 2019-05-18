@@ -19,8 +19,8 @@ CREATE TABLE users
   resetPasswordToken VARCHAR(255),
   resetPasswordExpires VARCHAR(255),
   registerDate VARCHAR(255) NOT NULL,
-  photo LONGBLOB,
   lastLogIn VARCHAR(255),
+  lastLogOut VARCHAR(255),
   PRIMARY KEY (userID),
   UNIQUE (username),
   UNIQUE (email)

@@ -157,7 +157,7 @@ router.post('/login', (req, res) => {
 
                     /** Assign our jwt to the cookie */
                     res.cookie('jwt', token, { httpOnly: true, secure: false, maxAge: 1800000 });
-                    req.session.status = 'active'
+                    req.session.lastActivity = Date.now().toString()
 
                     res.redirect('/')
 
@@ -177,6 +177,7 @@ router.get('/account',
     (req, res) => {
         const { user } = req
         const { username, userID } = user
+        req.session.lastActivity = Date.now()
 
 
         pool.execute('SELECT * FROM users WHERE username=?', [username],
@@ -192,7 +193,7 @@ router.get('/account',
                             (error, results, fields) => {
                                 const numOfDevices = results[0].numOfDevices
                                 if (error) throw error;
-                                pool.execute('SELECT COUNT(deviceID) AS numOfCameras FROM Devices WHERE userID = ? AND type=?', [userID,'camera'],
+                                pool.execute('SELECT COUNT(deviceID) AS numOfCameras FROM Devices WHERE userID = ? AND type=?', [userID, 'camera'],
                                     (error, results, fields) => {
                                         console.log(results)
                                         res.render('account_page', {
@@ -202,7 +203,7 @@ router.get('/account',
                                             email,
                                             numOfRooms,
                                             numOfDevices,
-                                            numOfCameras:results[0].numOfCameras,
+                                            numOfCameras: results[0].numOfCameras,
                                             registerDate: newReg.toDateString(),
                                             sessionedRender: true
                                         })
@@ -300,22 +301,28 @@ router.get('/users/delete',
     })
 
 router.get('/logout', (req, res, next) => {
-    if (req.session) {
-        // delete session object
-        req.session.destroy((err) => {
-            if (err) {
-                return next(err);
-            } else {
+    // if (req.session) {
+    //     // delete session object
+    //     req.session.destroy((err) => {
+    //         if (err) {
+    //             return next(err);
+    //         } else {
 
-                res.clearCookie('jwt');
-                res.clearCookie('session')
-                req.logout();
-                return res.redirect('/');
+    //             res.clearCookie('jwt');
+    //             res.clearCookie('session')
+    //             req.logout();
+    //             return res.redirect('/');
 
-            }
-        });
-    }
+    //         }
+    //     });
+    // }
+
+    res.clearCookie('jwt');
+    res.clearCookie('session')
+    req.logout();
+    return res.redirect('/');
 });
+
 
 
 module.exports = router

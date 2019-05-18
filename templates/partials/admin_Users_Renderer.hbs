@@ -8,7 +8,11 @@
     <td>{{email}}</td>
     <td>{{registerDate}}</td>
     <td>{{lastLogIn}}</td>
-    <td>Fix this</td>
+    {{#if lastActivity}}
+    <td>{{lastActivity}}</td>
+    {{else}}
+    <td>More than a day</td>
+    {{/if}}
     <td>{{numOfRooms}}</td>
     <td>{{numOfDevices}}</td>
     <td><a href="/users/delete/?id={{userID}}" class="button" id="delete_button">Delete</a></td>

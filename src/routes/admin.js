@@ -11,29 +11,38 @@ const validator = require('validator')
 const pool = require('../db')
 
 function getDateTime(datetime) {
+    if (typeof (datetime) == 'string' || typeof (datetime) == 'number') {
+        var date = new Date(datetime);
+        var hour = date.getHours();
+        hour = (hour < 10 ? "0" : "") + hour;
 
-    var date = new Date(datetime);
+        var day = date.toDateString()
 
-    var hour = date.getHours();
-    hour = (hour < 10 ? "0" : "") + hour;
+        var min = date.getMinutes();
+        min = (min < 10 ? "0" : "") + min;
 
-    var min = date.getMinutes();
-    min = (min < 10 ? "0" : "") + min;
+        var sec = date.getSeconds();
+        sec = (sec < 10 ? "0" : "") + sec;
+        return day + " " + hour + ":" + min + ":" + sec;
 
-    var sec = date.getSeconds();
-    sec = (sec < 10 ? "0" : "") + sec;
+    } else {
+        return 0;
+    }
+
+
 
     // var year = date.getFullYear();
 
     // var month = date.getMonth() + 1;
     // month = (month < 10 ? "0" : "") + month;
 
-    var day = date.toDateString()
+    // var day = date.toDateString()
 
     // var day = date.getDate();
     // day = (day < 10 ? "0" : "") + day;
 
-    return day + " " + hour + ":" + min + ":" + sec;
+
+
 
 }
 
@@ -64,14 +73,22 @@ router.get('/admin/dashboard',
                                     pool.execute('SELECT COUNT(roomID) as numOfRooms FROM Rooms JOIN users on Rooms.userID = users.userID WHERE userType = ?', ['user'],
                                         (errors, results, fields) => {
                                             const { numOfRooms } = results[0]
-                                            pool.execute('SELECT username,COUNT(Rooms.roomID) AS numOfRooms,COUNT(Devices.deviceID) AS numOfDevices, users.userID,fname,lname,email,registerDate,lastLogIn FROM users LEFT JOIN Rooms ON users.userID = Rooms.userID RIGHT JOIN Devices ON users.userID = Devices.userID WHERE userType=? GROUP BY Devices.deviceID UNION SELECT username,COUNT(Rooms.roomID),COUNT(DeviceID),users.userID,fname,lname,email,registerDate,lastLogIn FROM users RIGHT JOIN Rooms ON users.userID = Rooms.userID RIGHT JOIN Devices ON users.userID=Devices.userID GROUP BY Devices.deviceID'
-                                                , ['user'],
+                                            // pool.execute('SELECT username,COUNT(Rooms.roomID) AS numOfRooms,COUNT(Devices.deviceID) AS numOfDevices, users.userID,fname,lname,email,registerDate,lastLogIn FROM users LEFT JOIN Rooms ON users.userID = Rooms.userID RIGHT JOIN Devices ON users.userID = Devices.userID WHERE userType=? GROUP BY Devices.deviceID UNION SELECT username,COUNT(Rooms.roomID),COUNT(DeviceID),users.userID,fname,lname,email,registerDate,lastLogIn FROM users RIGHT JOIN Rooms ON users.userID = Rooms.userID RIGHT JOIN Devices ON users.userID=Devices.userID GROUP BY Devices.deviceID'
+                                            // pool.execute('SELECT username,COUNT(DISTINCT(Rooms.roomID)) AS numOfRooms,COUNT(DISTINCT(Devices.deviceID)) as numOfDevices,users.userID,fname,lname,email,registerDate,lastLogIn from users LEFT JOIN Rooms ON users.userID = Rooms.userID LEFT JOIN Devices ON users.userID = Devices.userID WHERE userType = ? GROUP BY username;',
+                                            pool.execute('SELECT username,COUNT(DISTINCT(Rooms.roomID)) AS numOfRooms,COUNT(DISTINCT(Devices.deviceID)) as numOfDevices,users.userID,fname,lname,email,registerDate,lastLogIn,CAST(JSON_EXTRACT(data,?) AS UNSIGNED) AS lastActivity FROM users LEFT JOIN Rooms ON users.userID = Rooms.userID LEFT JOIN Devices ON users.userID = Devices.userID  LEFT JOIN sessions ON users.userID = JSON_EXTRACT(data,?) WHERE userType = ? GROUP BY username,data;',
+                                                ['$.lastActivity', '$.passport.user', 'user'],
                                                 (errors, results, fields) => {
                                                     for (k = 0; k < results.length; k++) {
                                                         var registerDate = getDateTime(results[k].registerDate)
                                                         var lastLogIn = getDateTime(results[k].lastLogIn)
+                                                        var lastActivity = getDateTime(results[k].lastActivity)
+                                                        // console.log(typeof (results[k].lastLogIn))
+                                                        // console.log(typeof (results[k].lastActivity))
                                                         results[k].registerDate = registerDate
                                                         results[k].lastLogIn = lastLogIn
+                                                        // console.log(lastActivity.toDateString())
+
+                                                        results[k].lastActivity = lastActivity
                                                     }
                                                     const users = results
                                                     pool.execute('SELECT username,messageDate,userID,name,Contact.email,message FROM Contact LEFT JOIN users ON Contact.email = users.email;',
@@ -80,6 +97,7 @@ router.get('/admin/dashboard',
                                                                 var messageDate = new Date(results[k].messageDate);
                                                                 results[k].messageDate = messageDate.toDateString()
                                                             }
+
 
                                                             res.render('admin_page', {
 

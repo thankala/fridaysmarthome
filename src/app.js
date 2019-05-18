@@ -68,7 +68,7 @@ app.use(flash())
 //Session Init
 app.use(session({
     name: 'session',
-    cookie: { path: '/', httpOnly: true, maxAge: 300000 },
+    cookie: { path: '/', httpOnly: true, maxAge: 86400000 },
     rolling: true,
     secret: keys.secret,
     rolling: true,
@@ -81,8 +81,8 @@ app.use(session({
         connectionLimit: 10,
         queueLimit: 0,
         clearExpired: true,
-        checkExpirationInterval: 30000,
-        expiration: 300000
+        checkExpirationInterval: 86400000,
+        expiration: 86400000
     }),
     resave: false,
     saveUninitialized: false
