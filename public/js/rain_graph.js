@@ -1,8 +1,8 @@
 // Define variables
-var dateFormat_humidity = 'MMMM DD YYYY';
-var date_humidity = moment('April 01 2017', dateFormat_humidity);
-var data_humidity = [randomBar(date_humidity, 30)];
-var cfg_humidity = {
+var dateFormat_rain = 'MMMM DD YYYY';
+var date_rain = moment('April 01 2017', dateFormat_rain);
+var data_rain = [randomBar(date_rain, 30)];
+var cfg_rain = {
     type: 'bar',
     data: {
         datasets: [{
@@ -11,12 +11,12 @@ var cfg_humidity = {
             color: "#000000",
             fillColor: "#000000",
             backgroundColor: "#000000",
-            data: data_humidity,
-            type: 'line',
+            data: data_rain,
+            //type: 'line',
             pointRadius: 2,
             fill: false,
             lineTension: 0,
-            borderWidth: 2,
+            borderWidth: 1,
         }]
     },
 
@@ -44,7 +44,7 @@ var cfg_humidity = {
             yAxes: [{
                 scaleLabel: {
                     display: true,
-                    labelString: 'Humidity (%)',
+                    labelString: 'Rain (Yes/No)',
                     fontColor: "#000"
                 },
                 ticks: {
@@ -73,26 +73,26 @@ var cfg_humidity = {
 
 
 // Push to data 10 values
-while (data_humidity.length < 10) {
-    date_humidity = date_humidity.clone().add(1, 'd');
-    if (date_humidity.isoWeekday() <= 5) {
-        data_humidity.push(randomBar(date_humidity, data_humidity[data_humidity.length - 1].y));
+while (data_rain.length < 10) {
+    date_rain = date_rain.clone().add(1, 'd');
+    if (date_rain.isoWeekday() <= 5) {
+        data_rain.push(randomBar(date_rain, data_rain[data_rain.length - 1].y));
     }
 }
 //Create chart
-ctx_humidity = document.getElementById('humidity_chart').getContext('2d');
-ctx_humidity.canvas.width = 1000;
-ctx_humidity.canvas.height = 300;
-var chart_humidity = new Chart(ctx_humidity, cfg_humidity);
+ctx_rain = document.getElementById('rain_chart').getContext('2d');
+ctx_rain.canvas.width = 1000;
+ctx_rain.canvas.height = 300;
+var chart_rain = new Chart(ctx_rain, cfg_rain);
 //Function add new data for "add new" button
-function add_new_data_humidity() {
+function add_new_data_rain() {
     for (i = 0; i < 5; i++) {
-        date_humidity = date_humidity.clone().add(1, 'd');
-        if (date_humidity.isoWeekday() <= 5) {
-            data_humidity.push(randomBar(date_humidity, data_humidity[data_humidity.length - 1].y));
+        date_rain = date_rain.clone().add(1, 'd');
+        if (date_rain.isoWeekday() <= 5) {
+            data_rain.push(randomBar(date_rain, data_rain[data_rain.length - 1].y));
         }
     }
-    chart_humidity.update();
+    chart_rain.update();
 }
 
 function randomNumber(min, max) {
