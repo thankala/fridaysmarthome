@@ -104,7 +104,6 @@ nav #logo-container img {
   border: 2px solid #8BC34A;
   background-color: black;
 }
-
 #log_out_button:hover {
   border: 2px solid #8BC34A;
   background-color: black;
@@ -612,7 +611,7 @@ input[type="text"], input[type="password"] {
 }
 
 .image_baggos {
-  background-image: url(../images/vangelis_spathonis_photo.jpg);
+  background-image: url(../images/person.jpg);
   height: 200px;
   width: 200px;
   border-radius: 100%;
@@ -960,6 +959,7 @@ input[type="text"], input[type="password"] {
   background-color: #191919;
 }
 
+
 /*  Top Button */
 
 #myBtn {
@@ -980,43 +980,4 @@ input[type="text"], input[type="password"] {
 
 #myBtn:hover {
   background-color: #555;
-}
-
-/* Alerts */
-
-.alert {
-  width: 80%;
-  margin: 0 auto;
-  padding: 5px 20px;
-  background-color: #f44336;
-  color: white;
-  margin-top: 10px;
-}
-
-.success {
-  width: 80%;
-  margin: 0 auto;
-  padding: 5px 20px;
-  background-color: #8BC34A;
-  color: white;
-  margin-top: 10px;
-}
-
-.closebtn {
-  margin-left: 15px;
-  color: white;
-  font-weight: bold;
-  float: right;
-  font-size: 22px;
-  line-height: 20px;
-  cursor: pointer;
-  transition: 0.3s;
-}
-
-.closebtn:hover {
-  color: black;
-}
-
-.device_section {
-  display: flow-root;
 }

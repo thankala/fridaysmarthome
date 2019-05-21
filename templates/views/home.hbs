@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Home</title>
+    <meta charset="utf-8">
+    <meta name="description" content="Friday | Smart Home Application">
+    <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/home_style.css">
+    <link rel="stylesheet" type="text/css" href="/css/home_dashboard_style.css">
+    <link rel="stylesheet" type="text/css" href="/css/home_custom_style.css">
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css"
+        integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+
+    <script>
+        setTimeout(function () {
+            window.location.reload(1);
+        }, 60000);
+    </script>
+
+
+
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+</head>
+
+<body>
+    <nav id="top-bar">
+
+        <div id="logo-container">
+            <a id="logo" href="index.html"><img src="images\hero_logo.png"></a>
+        </div>
+
+
+    </nav>
+
+
+    <div id="main">
+        <div class='section_1'>
+            <div class="dashboard_container">
+
+                <div class="dashboard_main">
+
+                    <h3>Rooms</h3>
+                    <hr class="separator">
+                    <div class="room_container">
+                        <h3>Living room</h3>
+                        <p>Comment</p>
+                        <p style="margin-top:40px;">Update: <span id="hour">15</span>:<span id="minutes">30</span></p>
+                        <!-- Get current time -->
+                        <script>
+                            var d = new Date(); // for now
+                            document.getElementById("hour").innerHTML = d.getHours();
+                            document.getElementById("minutes").innerHTML = d.getMinutes();
+                        </script>
+                        <div class="room_inside">
+                            <!-- Lights-->
+                            <div class="device_section">
+                                <div class="device_container">
+                                    <div class="device">
+                                        <i class="fa fa-lightbulb-o" aria-hidden="true" style="color:yellow;"></i>
+                                        <p>Light 1</p>
+
+                                    </div>
+                                    <div class="device">
+                                        <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+                                        <p>Light 2</p>
+
+                                    </div>
+                                    <div class="device">
+                                        <i class="fa fa-lightbulb-o" aria-hidden="true" style="color:yellow"></i>
+                                        <p>Light 3</p>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sockets-->
+                            <div class="device_section">
+                                <div class="device_container">
+                                    <div class="device">
+                                        <i class="fa fa-plug" aria-hidden="true"></i>
+                                        <p>Socket 1</p>
+
+                                    </div>
+                                    <div class="device">
+                                        <i class="fa fa-plug" aria-hidden="true" style="color:yellow"></i>
+                                        <p>Socket 2</p>
+
+                                    </div>
+                                    <div class="device">
+                                        <i class="fa fa-plug" aria-hidden="true" style="color:yellow"></i>
+                                        <p>Socket 3</p>
+
+                                    </div>
+                                    <div class="device">
+                                        <i class="fa fa-plug" aria-hidden="true"></i>
+                                        <p>Socket 4</p>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Miscellaneous-->
+                            <div class="device_section">
+                                <div class="device_container">
+                                    <div class="device">
+                                        <i class="fa fa-thermometer-three-quarters" aria-hidden="true"></i>
+                                        <p>Thermometer</p>
+                                        <p>30 &#8451;</p>
+                                    </div>
+                                    <div class="device">
+                                        <i class="fa fa-tint" aria-hidden="true"></i>
+                                        <p>Humidity sensor</p>
+                                        <p>67%</p>
+
+                                    </div>
+                                    <div class="device">
+                                        <i class="fa fa-cloud" aria-hidden="true"></i>
+                                        <p>Raindrop Sensor</p>
+                                        <p>Status: <span id="rain_status">ON</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+
+        <div class="footer" style="height:auto">
+            <p id="copyright">&copy; 2019 University Of Patras<p>
+        </div>
+
+
+    </div>
+
+
+
+</body>
+
+</html>
