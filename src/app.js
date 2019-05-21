@@ -16,7 +16,6 @@ const cookieParser = require('cookie-parser')
 
 const PORT = process.env.PORT || 3000;
 
-
 require('./passport')(passport)
 app.use(cookieParser(keys.secret));
 
@@ -128,5 +127,6 @@ app.use('/', require('./routes/devices'))
 app.use('/', require('./routes/recover'))
 app.use('/', require('./routes/rooms'))
 app.use('/', require('./routes/admin'))
+app.use('/', require('./routes/home'))
 
 app.listen(PORT, console.log("Server started on port " + PORT));

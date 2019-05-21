@@ -80,14 +80,14 @@ router.get('/rooms/*room',
         req.session.lastActivity = Date.now().toString()
        
 
-        pool.execute('SELECT Rooms.roomID as roomID, Rooms.name as roomName, Rooms.longName as roomLongName, Devices.type as deviceType, Devices.name as deviceName, Devices.deviceID as deviceID FROM Rooms LEFT JOIN Devices on Rooms.roomID = Devices.roomID WHERE Rooms.roomID=? AND Rooms.userID=?', [roomID, userID],
+        pool.execute('SELECT Rooms.roomID as roomID, Rooms.name as roomName, Rooms.longName as roomLongName, Devices.type as deviceType, Devices.name as deviceName, Devices.deviceID as deviceID, Devices.state as deviceState FROM Rooms LEFT JOIN Devices on Rooms.roomID = Devices.roomID WHERE Rooms.roomID=? AND Rooms.userID=?', [roomID, userID],
 
             (error, results, fields) => {
                 if (error) throw error
                 
-                for (k = 0; k < results.length; k++) {
-                    results[k].category = category
-                }
+                // for (k = 0; k < results.length; k++) {
+                //     results[k].category = category
+                // }
     
                 res.render('room', {
                     devices: results,

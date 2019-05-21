@@ -11,16 +11,19 @@
             {{#if devices}}
             {{#each devices}}
             {{#ifCond deviceType '==' 'light'}}
-            <div class="device" id={{deviceID}}>
-                <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
-                <p>Light {{deviceName}}</p>
-                <p style="font-size:0.7em;">{{roomLongName}}</p>
-                <p style="font-size:0.7em;">{{roomName}}</p>
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider round"></span>
-                </label>
-            </div>
+            <a href="/devices/edit/?id={{deviceID}}&category={{category}}">
+                <div class="device">
+                    <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
+                    <p>Light {{deviceName}}</p>
+                    <p style="font-size:0.7em;">{{roomLongName}}</p>
+                    <p style="font-size:0.7em;">{{roomName}}</p>
+                    <label class="switch">
+                        <input type="checkbox" {{#if deviceState}} checked {{else}} unchecked {{/if}} id={{deviceID}}
+                            onclick="stateChange(this)">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </a>
             {{/ifCond}}
             {{/each}}
             {{/if}}
@@ -42,16 +45,19 @@
             {{#if devices}}
             {{#each devices}}
             {{#ifCond deviceType '==' 'socket'}}
-            <div class="device">
-                <i class="fa fa-plug" aria-hidden="true"></i>
-                <p>Socket {{deviceName}}</p>
-                <p style="font-size:0.7em;">{{roomLongName}}</p>
-                <p style="font-size:0.7em;">{{roomName}}</p>
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider round"></span>
-                </label>
-            </div>
+            <a href="/devices/edit/?id={{deviceID}}&category={{category}}">
+                <div class="device">
+                    <i class="fa fa-plug" aria-hidden="true"></i>
+                    <p>Socket {{deviceName}}</p>
+                    <p style="font-size:0.7em;">{{roomLongName}}</p>
+                    <p style="font-size:0.7em;">{{roomName}}</p>
+                    <label class="switch">
+                        <input type="checkbox" {{#if deviceState}} checked {{else}} unchecked {{/if}} id={{deviceID}}
+                            onclick="stateChange(this)">
+                        <span class="slider round"></span>
+                    </label>
+                </div>
+            </a>
             {{/ifCond}}
             {{/each}}
             {{/if}}
@@ -72,12 +78,14 @@
             {{#if devices}}
             {{#each devices}}
             {{#ifCond deviceType '==' 'camera'}}
-            <div class="device">
-                <i class="fa fa-video-camera" aria-hidden="true"></i>
-                <p>Camera {{deviceName}}</p>
-                <p style="font-size:0.7em;">{{roomLongName}}</p>
-                <p style="font-size:0.7em;">{{roomName}}</p>
-            </div>
+            <a href="/devices/edit/?id={{deviceID}}&category={{category}}">
+                <div class="device">
+                    <i class="fa fa-video-camera" aria-hidden="true"></i>
+                    <p>Camera {{deviceName}}</p>
+                    <p style="font-size:0.7em;">{{roomLongName}}</p>
+                    <p style="font-size:0.7em;">{{roomName}}</p>
+                </div>
+            </a>
             {{/ifCond}}
             {{/each}}
             {{/if}}
@@ -100,30 +108,36 @@
             {{#if devices}}
             {{#each devices}}
             {{#ifCond deviceType '==' 'thermometer'}}
-            <div class="device">
-                <i class="fa fa-thermometer-three-quarters" aria-hidden="true"></i>
-                <p>Thermometer {{deviceName}}</p>
-                <p style="font-size:0.7em;">{{roomLongName}}</p>
-                <p style="font-size:0.7em;">{{roomName}}</p>
-                <p>30 &#8451;</p>
-            </div>
+            <a href="/devices/edit/?id={{deviceID}}&category={{category}}">
+                <div class="device">
+                    <i class="fa fa-thermometer-three-quarters" aria-hidden="true"></i>
+                    <p>Thermometer {{deviceName}}</p>
+                    <p style="font-size:0.7em;">{{roomLongName}}</p>
+                    <p style="font-size:0.7em;">{{roomName}}</p>
+                    <p>30 &#8451;</p>
+                </div>
+            </a>
             {{/ifCond}}
             {{#ifCond deviceType '==' 'hsensor'}}
-            <div class="device">
-                <i class="fa fa-tint" aria-hidden="true"></i>
-                <p>Humidity Sensor {{deviceName}}</p>
-                <p style="font-size:0.7em;">{{roomLongName}}</p>
-                <p style="font-size:0.7em;">{{roomName}}</p>
-                <p>30 &#8451;</p>
-            </div>
+            <a href="/devices/edit/?id={{deviceID}}&category={{category}}">
+                <div class="device">
+                    <i class="fa fa-tint" aria-hidden="true"></i>
+                    <p>Humidity Sensor {{deviceName}}</p>
+                    <p style="font-size:0.7em;">{{roomLongName}}</p>
+                    <p style="font-size:0.7em;">{{roomName}}</p>
+                    <p>30 &#8451;</p>
+                </div>
+            </a>
             {{/ifCond}}
             {{#ifCond deviceType '==' 'rainsensor'}}
-            <div class="device">
-                <i class="fa fa-cloud" aria-hidden="true"></i>
-                <p>Raindrop Sensor {{deviceName}}</p>
-                <p style="font-size:0.7em;">{{roomLongName}}</p>
-                <p style="font-size:0.7em;">{{roomName}}</p>
-            </div>
+            <a href="/devices/edit/?id={{deviceID}}&category={{category}}">
+                <div class="device">
+                    <i class="fa fa-cloud" aria-hidden="true"></i>
+                    <p>Raindrop Sensor {{deviceName}}</p>
+                    <p style="font-size:0.7em;">{{roomLongName}}</p>
+                    <p style="font-size:0.7em;">{{roomName}}</p>
+                </div>
+            </a>
             {{/ifCond}}
             {{/each}}
             {{/if}}

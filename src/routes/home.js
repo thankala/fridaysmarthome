@@ -6,22 +6,18 @@ const router = express.Router()
 const pool = require('../db')
 
 
-router.get('/history',
+router.get('/home',
     passport.authenticate('jwt', { session: true, failureRedirect: '/login' }),
     (req, res) => {
         const { user } = req
-        const { username } = user
+        const { userID, username } = user
         req.session.lastActivity = Date.now().toString()
 
-        pool.execute('SELECT * FROM users WHERE username=?', [username],
+        pool.execute(`SELECT Rooms.roomID as roomID, Rooms.name as roomName, Rooms.longName as roomLongName, JSON_ARRAYAGG(JSON_OBJECT('deviceName', Devices.name,  'deviceID', Devices.deviceID,'deviceType', Devices.type, 'deviceState' , Devices.state)) as devices FROM Rooms LEFT JOIN Devices ON Rooms.roomID = Devices.roomID WHERE Rooms.userID=${userID} GROUP BY Rooms.roomID`, [],
             (error, results, fields) => {
                 if (error) throw error
-                const { username, fname, lname, email } = results[0]
-                res.render('history', {
-                    username,
-                    fname,
-                    lname,
-                    email,
+                res.render('home', {
+                    rooms: results,
                     sessionedRender: true
                 })
 

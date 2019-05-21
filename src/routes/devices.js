@@ -14,9 +14,12 @@ router.get('/devices',
 
         req.session.lastActivity = Date.now().toString()
 
-        pool.execute('SELECT Rooms.name as roomName, Rooms.longName as roomLongName,Rooms.type as roomType, Devices.type as deviceType, Devices.name as deviceName, Devices.deviceID as deviceID FROM Devices JOIN Rooms ON Devices.roomID = Rooms.roomID WHERE Devices.userID=?', [userID],
+        pool.execute('SELECT Rooms.name as roomName, Rooms.longName as roomLongName,Rooms.type as roomType, Devices.type as deviceType, Devices.name as deviceName, Devices.deviceID as deviceID, Devices.state as deviceState FROM Devices JOIN Rooms ON Devices.roomID = Rooms.roomID WHERE Devices.userID=?', [userID],
             (error, results, fields) => {
                 if (error) throw error
+                for (k = 0; k < results.length; k++) {
+                    results[k].category = '/devices'
+                }
                 res.render('devices', {
                     devices: results,
                     sessionedRender: true,
@@ -139,7 +142,7 @@ router.post('/devices/update',
     (req, res) => {
         const { user } = req
         const { userID } = user
-        const { id } = req.query
+        const { id, category } = req.query
         const { option, name } = req.body
 
         pool.execute('UPDATE Devices SET roomID=? , name=? WHERE deviceID =? AND userID=?', [option, name, id, userID],
@@ -147,13 +150,35 @@ router.post('/devices/update',
                 pool.execute('SELECT type,roomID From Rooms WHERE roomID=?', [option],
                     (error, results, fields) => {
                         const url = '/rooms/' + results[0].type + '/?id=' + results[0].roomID
-                        req.flash('success_msg', 'Device updated successfully')
-                        res.redirect(url)
+                        if (category) {
+                            req.flash('success_msg', 'Device updated successfully')
+                            res.redirect(category)
+                        } else {
+                            req.flash('success_msg', 'Device updated successfully')
+                            res.redirect(url)
+                        }
+
+
 
 
                     })
             }
         )
-    })
+    }
+)
+router.get('/devices/state',
+    passport.authenticate('jwt', { session: true }),
+    (req, res) => {
+        const { user } = req
+        const { userID } = user
+        const deviceID = req.query.id
+        const state = req.query.state
+
+        pool.execute('UPDATE Devices SET state=? WHERE deviceID =? AND userID=?', [state, deviceID, userID],
+            (errors, results, fields) => {
+                if (errors) throw errors;
+            })
+    }
+)
 
 module.exports = router

@@ -16,12 +16,13 @@
             {{#if devices}}
             {{#each devices}}
             {{#ifCond deviceType '==' 'light'}}
-            <a href="/devices/edit/?id={{deviceID}}&category={{category}}">
+            <a href="/devices/edit/?id={{deviceID}}">
                 <div class="device" id={{deviceID}}>
                     <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
                     <p>Light {{deviceName}}</p>
                     <label class="switch">
-                        <input type="checkbox">
+                        <input type="checkbox" {{#if deviceState}} checked {{else}} unchecked {{/if}} id={{deviceID}}
+                            onclick="stateChange(this)">
                         <span class="slider round"></span>
                     </label>
                 </div>
@@ -29,7 +30,7 @@
             {{/ifCond}}
             {{/each}}
             {{/if}}
-            <a href="/devices/add/?deviceType=light&category={{category}}">
+            <a href="/devices/add/?deviceType=light">
                 <div class="device" id="add_device">
                     <p>Add light</p>
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -45,12 +46,13 @@
             {{#if devices}}
             {{#each devices}}
             {{#ifCond deviceType '==' 'socket'}}
-            <a href="/devices/edit/?id={{deviceID}}&category={{category}}">
+            <a href="/devices/edit/?id={{deviceID}}">
                 <div class="device" id="{{deviceID}}">
                     <i class="fa fa-plug" aria-hidden="true"></i>
                     <p>Socket {{deviceName}}</p>
                     <label class="switch">
-                        <input type="checkbox">
+                        <input type="checkbox" {{#if deviceState}} checked {{else}} unchecked {{/if}} id={{deviceID}}
+                            onclick="stateChange(this)">
                         <span class="slider round"></span>
                     </label>
                 </div>
@@ -58,7 +60,7 @@
             {{/ifCond}}
             {{/each}}
             {{/if}}
-            <a href="/devices/add/?deviceType=socket&category={{category}}">
+            <a href="/devices/add/?deviceType=socket">
                 <div class="device" id="add_device">
                     <p>Add Socket</p>
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -75,7 +77,7 @@
             {{#if devices}}
             {{#each devices}}
             {{#ifCond deviceType '==' 'camera'}}
-            <a href="/devices/edit/?id={{deviceID}}&category={{category}}">
+            <a href="/devices/edit/?id={{deviceID}}">
                 <div class="device">
                     <i class="fa fa-video-camera" aria-hidden="true"></i>
                     <p>Camera {{deviceName}}</p>
@@ -84,7 +86,7 @@
             {{/ifCond}}
             {{/each}}
             {{/if}}
-            <a href="/devices/add/?deviceType=camera&category={{category}}">
+            <a href="/devices/add/?deviceType=camera">
                 <div class="device" id="add_device">
                     <p>Add Camera</p>
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -103,7 +105,7 @@
             {{#if devices}}
             {{#each devices}}
             {{#ifCond deviceType '==' 'thermometer'}}
-            <a href="/devices/edit/?id={{deviceID}}&category={{category}}">
+            <a href="/devices/edit/?id={{deviceID}}">
                 <div class="device" id="{{deviceID}}">
                     <i class="fa fa-thermometer-three-quarters" aria-hidden="true"></i>
                     <p>Thermometer {{deviceName}}</p>
@@ -113,7 +115,7 @@
             {{/ifCond}}
 
             {{#ifCond deviceType '==' 'hsensor'}}
-            <a href="/devices/edit/?id={{deviceID}}&category={{category}}">
+            <a href="/devices/edit/?id={{deviceID}}">
                 <div class="device" id="{{deviceID}}">
                     <i class="fa fa-tint" aria-hidden="true"></i>
                     <p>Humidity Sensor {{deviceName}}</p>
@@ -123,7 +125,7 @@
             {{/ifCond}}
 
             {{#ifCond deviceType '==' 'rainsensor'}}
-            <a href="/devices/edit/?id={{deviceID}}&category={{category}}">
+            <a href="/devices/edit/?id={{deviceID}}">
                 <div class="device">
                     <i class="fa fa-tint" aria-hidden="true"></i>
                     <p>Raindrop Sensor {{deviceName}}</p>
@@ -133,7 +135,7 @@
             {{/ifCond}}
             {{/each}}
             {{/if}}
-            <a href="/devices/add/?deviceType=other&category={{category}}">
+            <a href="/devices/add/?deviceType=other">
                 <div class="device" id="add_device">
                     <p>Add</p>
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>

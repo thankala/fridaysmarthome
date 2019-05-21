@@ -25,8 +25,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="/js/Chart.js"></script>
-
-
+    <script src="/js/state.js"></script>
 
     <meta name="viewport" content="width=device-width,initial-scale=1">
 </head>
@@ -394,7 +393,7 @@
                         <div class="camera_flexbox">
                             {{#if rooms}}
                             {{#each rooms}}
-                            {{#each device}}
+                            {{#each devices}}
                             {{#ifCond deviceType '==' 'camera' }}
                             <div class="camera_box">
                                 <h4>Camera {{deviceName}}</h4>

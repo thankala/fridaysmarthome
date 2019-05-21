@@ -10,16 +10,15 @@
             <div class="device_container">
                 {{#each devices}}
                 {{#ifCond deviceType '==' 'light' }}
-                <div class="device" id={{deviceID}}>
+                <div class="device">
                     <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
                     <p>Light {{deviceName}}</p>
                     <label class="switch">
-                        <input type="checkbox">
+                        <input type="checkbox" {{#if deviceState}} checked {{else}} unchecked {{/if}} id={{deviceID}}
+                            onclick="stateChange(this)">
                         <span class="slider round"></span>
                     </label>
                 </div>
-                {{!-- {{/debug}}
-                {{/each}} --}}
                 {{/ifCond}}
                 {{/each}}
             </div>
@@ -29,12 +28,13 @@
         <div class="device_section">
             <div class="device_container">
                 {{#each devices}}
-                {{#ifCond deviceType '==' 'socket' }}
-                <div class="device" id={{deviceID}}>
+                {{#ifCond deviceType '==' 'socket'}}
+                <div class="device">
                     <i class="fa fa-plug" aria-hidden="true"></i>
                     <p>Socket {{deviceName}}</p>
                     <label class="switch">
-                        <input type="checkbox">
+                        <input type="checkbox" {{#if deviceState}} checked {{else}} unchecked {{/if}} id={{deviceID}}
+                            onclick="stateChange(this)">
                         <span class="slider round"></span>
                     </label>
                 </div>
