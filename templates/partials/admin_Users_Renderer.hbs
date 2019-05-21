@@ -8,13 +8,13 @@
     <td>{{email}}</td>
     <td>{{registerDate}}</td>
     <td>{{lastLogIn}}</td>
-    {{#if lastActivity}}
+    {{#ifCond lastActivity '>' lastLogOut}}
     <td>{{lastActivity}}</td>
-    {{else if lastLogOut}}
+    {{else ifCond lastActivity '<' lastLogOut}}
     <td>{{lastLogOut}}</td>
     {{else}}
     <td>More than a day ago</td>
-    {{/if}}
+    {{/ifCond}}
     <td>{{numOfRooms}}</td>
     <td>{{numOfDevices}}</td>
     <td><a href="/users/delete/?id={{userID}}" class="button" id="delete_button">Delete</a></td>

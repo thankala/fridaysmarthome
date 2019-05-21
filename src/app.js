@@ -58,6 +58,18 @@ hbs.registerHelper('ifCond', function (v1, operator, v2, options) {
     }
 });
 
+hbs.registerHelper('debug', function (optionValue) {
+    console.log("Current Context");
+    console.log("====================");
+    console.log(this);
+
+    if (optionalValue) {
+        console.log("Value");
+        console.log("====================");
+        console.log(optionalValue);
+    }
+})
+
 
 // Body-Parser
 app.use(require('body-parser').urlencoded({ extended: false }));

@@ -11,7 +11,8 @@ router.get('/history',
     (req, res) => {
         const { user } = req
         const { username } = user
-     
+        req.session.lastActivity = Date.now().toString()
+
         pool.execute('SELECT * FROM users WHERE username=?', [username],
             (error, results, fields) => {
                 if (error) throw error

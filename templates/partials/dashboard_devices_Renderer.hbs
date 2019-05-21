@@ -5,10 +5,10 @@
     <p style="text-align: center;">{{roomName}}</p>
     <div class="room_inside">
         <!-- Lights-->
-        {{#if device}}
+        {{#if devices}}
         <div class="device_section">
             <div class="device_container">
-                {{#each device}}
+                {{#each devices}}
                 {{#ifCond deviceType '==' 'light' }}
                 <div class="device" id={{deviceID}}>
                     <i class="fa fa-lightbulb-o" aria-hidden="true"></i>
@@ -18,6 +18,8 @@
                         <span class="slider round"></span>
                     </label>
                 </div>
+                {{!-- {{/debug}}
+                {{/each}} --}}
                 {{/ifCond}}
                 {{/each}}
             </div>
@@ -26,7 +28,7 @@
         <!-- Sockets-->
         <div class="device_section">
             <div class="device_container">
-                {{#each device}}
+                {{#each devices}}
                 {{#ifCond deviceType '==' 'socket' }}
                 <div class="device" id={{deviceID}}>
                     <i class="fa fa-plug" aria-hidden="true"></i>
@@ -41,13 +43,10 @@
             </div>
         </div>
 
-        {{!-- {{/each}} --}}
-
-
         <!-- Miscellaneous-->
         <div class="device_section">
             <div class="device_container">
-                {{#each device}}
+                {{#each devices}}
                 {{#ifCond deviceType '==' 'thermometer'}}
                 <div class="device">
                     <i class="fa fa-thermometer-three-quarters" aria-hidden="true"></i>

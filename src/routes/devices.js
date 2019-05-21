@@ -12,6 +12,8 @@ router.get('/devices',
         const { user } = req
         const { userID, fname } = user
 
+        req.session.lastActivity = Date.now().toString()
+
         pool.execute('SELECT Rooms.name as roomName, Rooms.longName as roomLongName,Rooms.type as roomType, Devices.type as deviceType, Devices.name as deviceName, Devices.deviceID as deviceID FROM Devices JOIN Rooms ON Devices.roomID = Rooms.roomID WHERE Devices.userID=?', [userID],
             (error, results, fields) => {
                 if (error) throw error
@@ -33,9 +35,10 @@ router.get('/devices/add',
         const deviceType = req.query.deviceType;
         const category = req.query.category
 
+        req.session.lastActivity = Date.now().toString()
+
         pool.execute('SELECT roomID, type as roomType, name as roomName,longName as roomLongName,userID FROM Rooms WHERE userID=?', [userID],
             (error, results, fields) => {
-                // console.log(results)
                 if (error) throw error
                 res.render('add_device', {
                     rooms: results,
@@ -56,41 +59,27 @@ router.post('/devices/add',
 
         const { name, camera_link } = req.body
         const [deviceType, roomID] = req.body.option
-        // console.log(room)
-
 
         pool.execute('INSERT INTO Devices(type,src_link_of_live_streaming,name,userID,roomID) VALUES (?,?,?,?,?)', [deviceType, camera_link, name, userID, roomID],
             (error, results, fields) => {
                 if (error) throw error
                 pool.execute('SELECT type,roomID From Rooms WHERE roomID=?', [roomID],
-
                     (error, results, fields) => {
 
                         const url = '/rooms/' + results[0].type + '/?id=' + results[0].roomID
 
-                        if(room){
+                        if (room) {
                             req.flash('success_msg', 'Device added successfully')
                             res.redirect(room)
 
-                        }else{
+                        } else {
                             req.flash('success_msg', 'Device added successfully')
                             res.redirect(url)
                         }
-                        // req.flash('success_msg', 'Device added successfully')
-                        // res.redirect(url)
-                        // } else {
-                        //     req.flash('success_msg', 'Device added successfully')
-                        //     res.redirect(room)
-                        // }
-
-                        // } else {
-                        //     res.redirect('/')
-                        // }
-
-
                     }
                 )
-            })
+            }
+        )
     }
 )
 
@@ -100,6 +89,8 @@ router.get('/devices/edit',
         const { user } = req
         const { userID, fname } = user
         const { id, category } = req.query
+
+        req.session.lastActivity = Date.now().toString()
 
         pool.execute('SELECT Devices.type as deviceType, Devices.name as deviceName, Rooms.type as roomType, longName,Rooms.roomID FROM Rooms JOIN Devices on Rooms.roomID = Devices.roomID WHERE Rooms.userID=? AND Devices.deviceID=?', [userID, id],
             (error, results, fields) => {

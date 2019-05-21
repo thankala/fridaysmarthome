@@ -14,7 +14,6 @@ router.get('/cameras',
         pool.execute('SELECT * FROM Devices LEFT JOIN Rooms on Devices.roomID = Rooms.roomID WHERE Devices.userID=? and Devices.type=?', [userID,'camera'],
             (error, results, fields) => {
                 if (error) throw error
-                console.log(results)
                 res.render('cameras', {
                     fname,
                     sessionedRender: true,

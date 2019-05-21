@@ -177,7 +177,7 @@ router.get('/account',
     (req, res) => {
         const { user } = req
         const { username, userID } = user
-        req.session.lastActivity = Date.now().toString()
+        req.session.lastActivity = Date.now()
 
 
         pool.execute('SELECT * FROM users WHERE username=?', [username],
@@ -195,7 +195,6 @@ router.get('/account',
                                 if (error) throw error;
                                 pool.execute('SELECT COUNT(deviceID) AS numOfCameras FROM Devices WHERE userID = ? AND type=?', [userID, 'camera'],
                                     (error, results, fields) => {
-                                        console.log(results)
                                         res.render('account_page', {
                                             username,
                                             fname,
@@ -218,6 +217,7 @@ router.get('/account/edit',
     (req, res) => {
         const { user } = req
         const { username } = user
+        req.session.lastActivity = Date.now().toString()
 
         pool.execute('SELECT * FROM users WHERE username=?', [username],
             (error, results, fields) => {
@@ -245,7 +245,6 @@ router.post('/account/edit',
                 if (error) {
                     req.flash('error_msg', 'Username or Email already exists')
                     return res.redirect('/account/edit')
-
                 }
 
                 const payload = {
@@ -255,6 +254,7 @@ router.post('/account/edit',
                     fname: fname
                 };
 
+                /* Loging Out The User And Loging him in with new credentials */
                 res.clearCookie('jwt');
                 req.logout();
 
@@ -263,20 +263,16 @@ router.post('/account/edit',
                         res.send('error');
                     }
 
-                    /** generate a signed json web token and return it in the response */
+                    /* Generate a signed json web token and return it in the response */
                     const token = jwt.sign(JSON.stringify(payload), keys.secret);
 
-                    /** assign our jwt to the cookie */
+                    /* Assign our jwt to the cookie */
                     res.cookie('jwt', token, { httpOnly: true, secure: false, maxAge: 1800000 });
                     req.session.lastActivity = Date.now().toString()
-                    
 
+                    /* Flash and Redirect */
                     req.flash("success_msg", "Account Updated")
                     res.redirect('/account')
-
-
-
-                    //expires: new Date(Date.now() + 900000),
                 });
 
 
@@ -296,10 +292,11 @@ router.get('/users/delete',
                     req.flash('success_msg', 'User deleted')
                     res.redirect('/admin/dashboard')
 
-                })
+                }
+            )
         }
-
-    })
+    }
+)
 
 router.get('/logout', (req, res, next) => {
     const userID = req.user.userID
@@ -312,24 +309,15 @@ router.get('/logout', (req, res, next) => {
 
                 pool.execute('UPDATE users SET lastLogOut=? WHERE userID=?', [new Date(), userID],
                     (errors, results, fields) => {
-                        // console.log('Date added')
                     })
-
                 res.clearCookie('jwt');
                 res.clearCookie('session')
                 req.logout();
                 return res.redirect('/');
 
             }
-        });
+        })
     }
-
-    // res.clearCookie('jwt');
-    // res.clearCookie('session')
-    // req.logout();
-    // return res.redirect('/');
-});
-
-
+})
 
 module.exports = router

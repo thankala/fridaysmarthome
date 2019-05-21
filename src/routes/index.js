@@ -8,8 +8,9 @@ const validator = require('validator')
 
 router.get('/', (req, res) => {
     if (req.user) {
+        req.session.lastActivity = Date.now().toString()
         const { fname } = req.user
-    
+
         res.render('index', {
             sessionedRender: true,
             fname

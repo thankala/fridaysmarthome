@@ -89,49 +89,50 @@
             </a>
         </div>
     </div>
-</div>
 
-<!-- Miscellaneous-->
-<div class="device_section">
-    <h3>
-        Miscellaneous
-    </h3>
-    <div class="device_container">
-        {{#if devices}}
-        {{#each devices}}
-        {{#ifCond deviceType '==' 'thermometer'}}
-        <div class="device">
-            <i class="fa fa-thermometer-three-quarters" aria-hidden="true"></i>
-            <p>Thermometer {{deviceName}}</p>
-            <p style="font-size:0.7em;">{{roomLongName}}</p>
-            <p style="font-size:0.7em;">{{roomName}}</p>
-            <p>30 &#8451;</p>
-        </div>
-        {{/ifCond}}
-        {{#ifCond deviceType '==' 'hsensor'}}
-        <div class="device">
-            <i class="fa fa-tint" aria-hidden="true"></i>
-            <p>Humidity Sensor {{deviceName}}</p>
-            <p style="font-size:0.7em;">{{roomLongName}}</p>
-            <p style="font-size:0.7em;">{{roomName}}</p>
-            <p>30 &#8451;</p>
-        </div>
-        {{/ifCond}}
-        {{#ifCond deviceType '==' 'rainsensor'}}
-        <div class="device">
-            <i class="fa fa-cloud" aria-hidden="true"></i>
-            <p>Raindrop Sensor</p>
-            <p style="font-size:0.8em;">Garden</p>
-        </div>
-        {{/ifCond}}
-        {{/each}}
-        {{/if}}
-        <a href="/devices/add">
-            <div class="device" id="add_device">
-                <p>Add</p>
-                <i class="fa fa-plus-circle" aria-hidden="true"></i>
+
+    <!-- Miscellaneous-->
+    <div class="device_section">
+        <h3>
+            Miscellaneous
+        </h3>
+        <div class="device_container">
+            {{#if devices}}
+            {{#each devices}}
+            {{#ifCond deviceType '==' 'thermometer'}}
+            <div class="device">
+                <i class="fa fa-thermometer-three-quarters" aria-hidden="true"></i>
+                <p>Thermometer {{deviceName}}</p>
+                <p style="font-size:0.7em;">{{roomLongName}}</p>
+                <p style="font-size:0.7em;">{{roomName}}</p>
+                <p>30 &#8451;</p>
             </div>
-        </a>
+            {{/ifCond}}
+            {{#ifCond deviceType '==' 'hsensor'}}
+            <div class="device">
+                <i class="fa fa-tint" aria-hidden="true"></i>
+                <p>Humidity Sensor {{deviceName}}</p>
+                <p style="font-size:0.7em;">{{roomLongName}}</p>
+                <p style="font-size:0.7em;">{{roomName}}</p>
+                <p>30 &#8451;</p>
+            </div>
+            {{/ifCond}}
+            {{#ifCond deviceType '==' 'rainsensor'}}
+            <div class="device">
+                <i class="fa fa-cloud" aria-hidden="true"></i>
+                <p>Raindrop Sensor {{deviceName}}</p>
+                <p style="font-size:0.7em;">{{roomLongName}}</p>
+                <p style="font-size:0.7em;">{{roomName}}</p>
+            </div>
+            {{/ifCond}}
+            {{/each}}
+            {{/if}}
+            <a href="/devices/add">
+                <div class="device" id="add_device">
+                    <p>Add</p>
+                    <i class="fa fa-plus-circle" aria-hidden="true"></i>
+                </div>
+            </a>
+        </div>
     </div>
-</div>
 </div>

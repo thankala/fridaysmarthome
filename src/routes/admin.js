@@ -6,7 +6,6 @@ const bcrypt = require('bcrypt')
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
 const keys = require('../config/keys')
-const validator = require('validator')
 
 const pool = require('../db')
 
@@ -28,22 +27,6 @@ function getDateTime(datetime) {
     } else {
         return 0;
     }
-
-
-
-    // var year = date.getFullYear();
-
-    // var month = date.getMonth() + 1;
-    // month = (month < 10 ? "0" : "") + month;
-
-    // var day = date.toDateString()
-
-    // var day = date.getDate();
-    // day = (day < 10 ? "0" : "") + day;
-
-
-
-
 }
 
 router.get('/admin/login', (req, res) => {
@@ -73,8 +56,6 @@ router.get('/admin/dashboard',
                                     pool.execute('SELECT COUNT(roomID) as numOfRooms FROM Rooms JOIN users on Rooms.userID = users.userID WHERE userType = ?', ['user'],
                                         (errors, results, fields) => {
                                             const { numOfRooms } = results[0]
-                                            // pool.execute('SELECT username,COUNT(Rooms.roomID) AS numOfRooms,COUNT(Devices.deviceID) AS numOfDevices, users.userID,fname,lname,email,registerDate,lastLogIn FROM users LEFT JOIN Rooms ON users.userID = Rooms.userID RIGHT JOIN Devices ON users.userID = Devices.userID WHERE userType=? GROUP BY Devices.deviceID UNION SELECT username,COUNT(Rooms.roomID),COUNT(DeviceID),users.userID,fname,lname,email,registerDate,lastLogIn FROM users RIGHT JOIN Rooms ON users.userID = Rooms.userID RIGHT JOIN Devices ON users.userID=Devices.userID GROUP BY Devices.deviceID'
-                                            // pool.execute('SELECT username,COUNT(DISTINCT(Rooms.roomID)) AS numOfRooms,COUNT(DISTINCT(Devices.deviceID)) as numOfDevices,users.userID,fname,lname,email,registerDate,lastLogIn from users LEFT JOIN Rooms ON users.userID = Rooms.userID LEFT JOIN Devices ON users.userID = Devices.userID WHERE userType = ? GROUP BY username;',
                                             pool.execute('SELECT username,COUNT(DISTINCT(Rooms.roomID)) AS numOfRooms,COUNT(DISTINCT(Devices.deviceID)) as numOfDevices,users.userID,fname,lname,email,registerDate,lastLogIn,lastLogOut,CAST(JSON_EXTRACT(data,?) AS UNSIGNED) AS lastActivity FROM users LEFT JOIN Rooms ON users.userID = Rooms.userID LEFT JOIN Devices ON users.userID = Devices.userID  LEFT JOIN sessions ON users.userID = JSON_EXTRACT(data,?) WHERE userType = ? GROUP BY username,data;',
                                                 ['$.lastActivity', '$.passport.user', 'user'],
                                                 (errors, results, fields) => {
@@ -95,8 +76,6 @@ router.get('/admin/dashboard',
                                                                 var messageDate = new Date(results[k].messageDate);
                                                                 results[k].messageDate = messageDate.toDateString()
                                                             }
-
-
                                                             res.render('admin_page', {
 
                                                                 sessionedRender: true,
@@ -112,21 +91,21 @@ router.get('/admin/dashboard',
                                                                 contact: results
 
                                                             })
-
-                                                        })
-
-
-                                                })
-
+                                                        }
+                                                    )
+                                                }
+                                            )
                                         }
                                     )
                                 }
                             )
                         }
                     )
-                })
+                }
+            )
         }
-    })
+    }
+)
 
 router.post('/admin/login', (req, res) => {
     passport.authenticate(

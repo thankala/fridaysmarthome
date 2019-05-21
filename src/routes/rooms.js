@@ -11,6 +11,7 @@ router.get('/rooms',
     (req, res) => {
         const { user } = req
         const { userID, fname } = user
+        req.session.lastActivity = Date.now().toString()
 
         pool.execute('SELECT name,type,roomID FROM Rooms WHERE userID=?', [userID],
             (error, results, fields) => {
@@ -30,6 +31,7 @@ router.get('/rooms/add',
     (req, res) => {
         const { user } = req
         const { userID, fname } = user
+        req.session.lastActivity = Date.now().toString()
 
         pool.execute('SELECT name FROM Rooms WHERE userID', [userID],
             (error, results, fields) => {
@@ -46,13 +48,15 @@ router.get('/rooms/add',
 router.post('/rooms/add',
     passport.authenticate('jwt', { session: true, failureRedirect: '/login' }),
     (req, res) => {
-
-
-        const { option, name } = req.body
-        type = option.replace(/\s/g, '').toLowerCase();
-        console.log(type)
         const { user } = req
         const { userID } = user
+        const { option, name } = req.body
+
+        req.session.lastActivity = Date.now().toString()
+
+        type = option.replace(/\s/g, '').toLowerCase();
+        
+        
         pool.execute('INSERT INTO Rooms (name,type,userID,longName) VALUES (?,?,?,?)', [name, type, userID, option],
             (error, results, fields) => {
                 if (error) throw error
@@ -72,8 +76,9 @@ router.get('/rooms/*room',
         const { userID, fname } = user
         const roomID = req.query.id
         const category = req.originalUrl
-        //pool.execute('SELECT Rooms.roomID as roomID,Rooms.name as roomName, Rooms.longName as roomLongName, Devices.type as deviceType, Devices.name as deviceName, Devices.deviceID as deviceID FROM Devices LEFT JOIN Rooms ON Devices.roomID = Rooms.roomID WHERE Devices.roomID=? AND Devices.userID=? UNION SELECT Rooms.roomID as roomID, Rooms.name as roomName, Rooms.longName as roomLongName, Devices.type as deviceType, Devices.name as deviceName, Devices.deviceID as deviceID FROM Devices RIGHT JOIN Rooms ON Devices.roomID = Rooms.roomID WHERE Devices.roomID=? AND Devices.userID=?;'
 
+        req.session.lastActivity = Date.now().toString()
+       
 
         pool.execute('SELECT Rooms.roomID as roomID, Rooms.name as roomName, Rooms.longName as roomLongName, Devices.type as deviceType, Devices.name as deviceName, Devices.deviceID as deviceID FROM Rooms LEFT JOIN Devices on Rooms.roomID = Devices.roomID WHERE Rooms.roomID=? AND Rooms.userID=?', [roomID, userID],
 
@@ -103,8 +108,9 @@ router.get('/rooms/*room/delete',
     passport.authenticate('jwt', { session: true, failureRedirect: '/login' }),
     (req, res) => {
         const { user } = req
-        const { userID, fname } = user
+        const { userID } = user
         const roomID = req.query.id
+        req.session.lastActivity = Date.now().toString()
 
         pool.execute('DELETE FROM Rooms WHERE roomID=? AND userID=?', [roomID, userID],
             (error, results, fields) => {
