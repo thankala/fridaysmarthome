@@ -20,8 +20,10 @@
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Work+Sans" rel="stylesheet">
 
-    <script src="/js/scripts.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    {{!-- <script src="/js/new.js"></script> --}}
+    <script src="/js/scripts.js"></script>
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="js/Chart.js"></script>
@@ -49,30 +51,38 @@
             <div class="history-container">
                 <h2>History</h2>
                 <hr class="separator">
+                {{#if devices}}
+                {{#each devices}}
+                {{#ifCond devices.deviceType '==' 'thermometer'}}
                 <h3>Temperature</h3>
                 <div class="graph_box">
-                    <canvas id="temperature_chart" width="100%" height="100%"></canvas>
+                    <canvas class="temperature_chart" width="100%" height="100%"></canvas>
                     <br>
                     <button id="addData_temperature" onclick="add_new_data_temperature();">Add Data</button>
                 </div>
+                {{/ifCond}}
+                {{#ifCond devices.deviceType '==' 'hsensor'}}
                 <h3>Humidity</h3>
                 <div class="graph_box">
-                    <canvas id="humidity_chart" width="100%" height="100%"></canvas>
+                    <canvas class="humidity_chart" width="100%" height="100%"></canvas>
                     <br>
                     <button id="addData_humidity" onclick="add_new_data_humidity();">Add Data</button>
                 </div>
+                 {{/ifCond}}
+                {{#ifCond devices.deviceType '==' 'rainsensor'}}
                 <h3>Rain</h3>
                 <div class="graph_box">
-                    <canvas id="rain_chart" width="100%" height="100%"></canvas>
+                    <canvas class="rain_chart" width="100%" height="100%"></canvas>
                     <br>
                     <button id="addData_rain" onclick="add_new_data_rain();">Add Data</button>
                 </div>
+                 {{/ifCond}}
+                {{/each}}
+                {{/if}}
             </div>
-            <script src="/js/humidity_graph.js"></script>
-            <script src="/js/temperature_graph.js"></script>
-            <script src="/js/rain_graph.js"></script>
-
-
+            {{>temperature_graph}}
+            {{>humidity_graph}}
+            {{>rain_graph}}
 
         </div>
         {{>footer_mini}}

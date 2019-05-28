@@ -1,0 +1,158 @@
+<script>
+
+    var data = [
+        {{#each devices}}
+        {{#ifCond devices.deviceType '==' 'thermometer'}}
+        { "values":[
+        {{#each .}}
+        {{#each .}}
+        {{#each .}}
+    {   
+        "y": {{data}},
+        "t": {{time}}
+        
+    }   
+
+    {{#unless @last}},{{/unless}}
+    {{/each}}
+    {{/each}}
+                           
+   
+    {{/each}}
+     ]}
+     {{#unless @last}},{{/unless}}
+    {{/ifCond}}
+    {{/each}}                           
+                            ]
+
+    //Create chart
+    
+    var chart_temperature = []
+    var ctx_temperature = []
+    var cfg_temperature = []
+
+    for(i=0;i<data.length;i++){
+        ctx_temperature[i] = document.getElementsByClassName('temperature_chart')[i].getContext('2d');
+        ctx_temperature[i].canvas.width = 1000;
+        ctx_temperature[i].canvas.height = 300;
+        cfg_temperature.push({
+        type: 'bar',
+        data: {
+            datasets: [{
+                label: '',
+                borderColor: '#000',
+                color: "#000000",
+                fillColor: "#000000",
+                backgroundColor: "#000000",
+                data: data[i].values,
+                type: 'line',
+                pointRadius: 2,
+                fill: false,
+                lineTension: 0,
+                borderWidth: 2,
+            }]
+        },
+
+        options: {
+            reverse: true,
+            legend: { display: false },
+            animation: {
+                easing: 'linear',
+                duration: 300,
+            },
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        unit: 'minute'
+                    },
+                    distribution: 'series',
+                    ticks: {
+                        source: 'data',
+                        autoSkip: true,
+                        fontColor: "#000"
+                    }
+                }],
+                yAxes: [{
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Temperature (C)',
+                        fontColor: "#000"
+                    },
+                    ticks: {
+                        source: 'data',
+                        autoSkip: true,
+                        fontColor: "#000"
+                    }
+                }]
+            },
+            tooltips: {
+                intersect: false,
+                mode: 'index',
+                callbacks: {
+                    label: function (tooltipItem, myData) {
+                        var label = myData.datasets[tooltipItem.datasetIndex].label || '';
+                        if (label) {
+                            label += ': ';
+                        }
+                        label += parseFloat(tooltipItem.value).toFixed(2);
+                        return label;
+                    } 
+                }
+            }
+        }
+    })
+        chart_temperature.push(new Chart(ctx_temperature[i], cfg_temperature[i]));
+    }
+   
+    
+   
+    //Function add new data for "add new" button
+    {{!-- function add_new_data_temperature() {
+        for (i = 0; i < 5; i++) {
+            date_temperature = date_temperature.clone().add(-1, 'd');
+            //if (date_temperature.isoWeekday() <= 5) {
+            data_temperature.unshift(randomBar(date_temperature, data_temperature[data_temperature.length - 1].y));
+            //}
+        }
+
+      chart_temperature.update();
+    } --}}
+
+
+    </script>
+
+    {{!-- //console.log(data_temperature)
+
+    // $(window).on("load", () => { --}}
+
+    {{!-- // console.log(datalol)
+    // })
+
+    // async function httpGet() {
+    //     var xmlHttp = new XMLHttpRequest();
+    //     awaitxmlHttp.open("GET", '/history/device', true) // false for synchronous request
+    //     xmlHttp.send(null);
+    //      return xmlHttp.responseText;
+    // }
+
+    /*
+    var data_temperature = [
+        {{#each value}}
+        {{#each .}}
+
+    {   
+        "y": {{data}},
+        "t": {{time}}
+        
+    }   
+
+    {{#unless @last}},{{/unless}}
+    {{/each}}
+    {{/each}}
+                            ]
+
+
+    */
+    // console.log(httpGet())
+    // console.log(datalol) --}}

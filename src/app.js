@@ -12,14 +12,16 @@ const viewsPath = path.join(__dirname, "../templates/views")
 const partialsPath = path.join(__dirname, "../templates/partials")
 
 const app = express()
+
 const cookieParser = require('cookie-parser')
 
 const PORT = process.env.PORT || 3000;
 
+//Passport
 require('./passport')(passport)
+
+//Cookie parser
 app.use(cookieParser(keys.secret));
-
-
 
 // Handlebars View Engine for dynamic rendering
 app.set('view engine', 'hbs')
@@ -57,6 +59,8 @@ hbs.registerHelper('ifCond', function (v1, operator, v2, options) {
     }
 });
 
+
+//Never used
 hbs.registerHelper('debug', function (optionValue) {
     console.log("Current Context");
     console.log("====================");
@@ -71,13 +75,18 @@ hbs.registerHelper('debug', function (optionValue) {
 
 
 // Body-Parser
-app.use(require('body-parser').urlencoded({ extended: false }));
+// app.use(require('body-parser').urlencoded({ extended: false }));
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: false
+}));
 
 // Connect flash
 app.use(flash())
 
 //Session Init
-app.use(session({
+const sessionHandler = session({
     name: 'session',
     cookie: { path: '/', httpOnly: true, maxAge: 86400000 },
     rolling: true,
@@ -97,17 +106,27 @@ app.use(session({
     }),
     resave: false,
     saveUninitialized: false
-}));
+});
+
+app.use(function (req, res, next) {
+    // if path does not start with /error/, then invoke session middleware
+    if (req.url.indexOf("/remotedevices") !== 0) {
+        return sessionHandler(req, res, next);
+    } else {
+        next();
+    }
+});
 
 // Globar Vars (Custom Middleware) for flash messages
 app.use((req, res, next) => {
-    res.locals.success_msg = req.flash('success_msg');
-    res.locals.error_msg = req.flash('error_msg')
-    res.locals.error = req.flash('error')
+    if (req.url.indexOf("/remotedevices/") !== 0) {
+        res.locals.success_msg = req.flash('success_msg');
+        res.locals.error_msg = req.flash('error_msg')
+        res.locals.error = req.flash('error')
+
+    }
     next()
 })
-
-
 
 //Static Assets
 app.use(express.static(publicPath))
@@ -128,5 +147,6 @@ app.use('/', require('./routes/recover'))
 app.use('/', require('./routes/rooms'))
 app.use('/', require('./routes/admin'))
 app.use('/', require('./routes/home'))
+app.use('/', require('./routes/remoteDevices'))
 
 app.listen(PORT, console.log("Server started on port " + PORT));

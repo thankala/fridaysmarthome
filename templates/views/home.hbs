@@ -33,31 +33,31 @@
 
 <body>
     <nav id="top-bar">
-
         {{>menu}}
-
-
     </nav>
-
-
+    <div class="content" style="background-color: #343434;">
+        <div id="sidebar">
+            {{>sidebar}}
+        </div>
+    </div>
     <div id="main">
         <div class='section_1'>
             <div class="dashboard_container">
                 <div class="dashboard_main">
                     <h3>Rooms</h3>
+                    <p style="margin-top:40px;">Update: <span id="hour">15</span>:<span id="minutes">30</span></p>
+                    <!-- Get current time -->
+                    <script>
+                        var d = new Date(); // for now
+                        document.getElementById("hour").innerHTML = d.getHours();
+                        document.getElementById("minutes").innerHTML = d.getMinutes();
+                    </script>
                     <hr class="separator">
                     {{#if rooms}}
                     {{#each rooms}}
                     <div class="room_container">
                         <h3>{{roomLongName}}</h3>
                         <p>{{roomName}}</p>
-                        <p style="margin-top:40px;">Update: <span id="hour">15</span>:<span id="minutes">30</span></p>
-                        <!-- Get current time -->
-                        <script>
-                            var d = new Date(); // for now
-                            document.getElementById("hour").innerHTML = d.getHours();
-                            document.getElementById("minutes").innerHTML = d.getMinutes();
-                        </script>
                         <div class="room_inside">
                             <!-- Lights-->
                             {{#if devices}}
@@ -97,22 +97,22 @@
                                     {{#ifCond deviceType '==' 'thermometer'}}
                                     <div class="device">
                                         <i class="fa fa-thermometer-three-quarters" aria-hidden="true"></i>
-                                        <p>Thermometer</p>
-                                        <p>30 &#8451;</p>
+                                        <p>Thermometer {{deviceName}}</p>
+                                        <p>{{deviceValue.data}} &#8451;</p>
                                     </div>
                                     {{/ifCond}}
                                     {{#ifCond deviceType '==' 'hsensor'}}
                                     <div class="device">
                                         <i class="fa fa-tint" aria-hidden="true"></i>
-                                        <p>Humidity sensor</p>
-                                        <p>67%</p>
+                                        <p>Humidity sensor {{deviceName}}</p>
+                                        <p>{{deviceValue.data}}</p>
                                     </div>
                                     {{/ifCond}}
                                     {{#ifCond deviceType '==' 'rainsensor'}}
                                     <div class="device">
                                         <i class="fa fa-cloud" aria-hidden="true"></i>
                                         <p>Raindrop Sensor</p>
-                                        <p>Status: <span id="rain_status">ON</span></p>
+                                        <p>Status: <span id="rain_status">{{#ifCond deviceValue.data '==' '1'}} True {{else}} False {{/ifCond}}</span></p>
                                     </div>
                                     {{/ifCond}}
                                     {{/each}}

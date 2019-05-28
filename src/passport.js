@@ -23,7 +23,6 @@ module.exports = (passport) => {
                         return cb(null, false, { error_msg: 'User not found' })
                     }
 
-
                     bcrypt.compare(password, results[0].password, (err, isMatch) => {
                         if (err) throw error;
                         if (isMatch) {
@@ -39,10 +38,11 @@ module.exports = (passport) => {
 
     passport.use(new JWTStrategy({
         jwtFromRequest: req => req.cookies.jwt,
+        // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
         secretOrKey: secret,
     },
         (jwtPayload, done) => {
-
+            // console.log(jwtPayload)
             return done(null, jwtPayload);
         }
     ));

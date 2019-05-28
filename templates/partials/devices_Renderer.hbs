@@ -97,8 +97,6 @@
             </a>
         </div>
     </div>
-
-
     <!-- Miscellaneous-->
     <div class="device_section">
         <h3>
@@ -114,7 +112,7 @@
                     <p>Thermometer {{deviceName}}</p>
                     <p style="font-size:0.7em;">{{roomLongName}}</p>
                     <p style="font-size:0.7em;">{{roomName}}</p>
-                    <p>30 &#8451;</p>
+                    <p style="font-size:0.7em;">{{deviceValue.data}} &#8451;</p>
                 </div>
             </a>
             {{/ifCond}}
@@ -125,7 +123,7 @@
                     <p>Humidity Sensor {{deviceName}}</p>
                     <p style="font-size:0.7em;">{{roomLongName}}</p>
                     <p style="font-size:0.7em;">{{roomName}}</p>
-                    <p>30 &#8451;</p>
+                    <p style="font-size:0.7em;">{{deviceValue.data}} %</p>
                 </div>
             </a>
             {{/ifCond}}
@@ -136,6 +134,8 @@
                     <p>Raindrop Sensor {{deviceName}}</p>
                     <p style="font-size:0.7em;">{{roomLongName}}</p>
                     <p style="font-size:0.7em;">{{roomName}}</p>
+                    <p style="font-size:0.7em;">Status: <span id="rain_status">{{#ifCond deviceValue.data '==' '1'}}
+                            True {{else}} False {{/ifCond}}</span></p>
                 </div>
             </a>
             {{/ifCond}}

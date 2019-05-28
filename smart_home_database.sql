@@ -42,7 +42,7 @@ CREATE TABLE Devices
   type VARCHAR(255) NOT NULL,
   name VARCHAR(255),
   state BOOLEAN,
-  value FLOAT,
+  value JSON,
   src_link_of_live_streaming VARCHAR(255),
   userID INT NOT NULL,
   roomID INT NOT NULL,

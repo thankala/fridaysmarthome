@@ -10,22 +10,20 @@ router.get('/history',
     passport.authenticate('jwt', { session: true, failureRedirect: '/login' }),
     (req, res) => {
         const { user } = req
-        const { username } = user
+        const { userID, fname } = user
         req.session.lastActivity = Date.now().toString()
 
-        pool.execute('SELECT * FROM users WHERE username=?', [username],
-            (error, results, fields) => {
-                if (error) throw error
-                const { username, fname, lname, email } = results[0]
+        pool.execute('SELECT JSON_OBJECT("deviceID", Devices.deviceID,"deviceType", Devices.type, "deviceValue" , Devices.value) as devices FROM Devices WHERE userID=? AND (type="thermometer" OR type="rainsensor" OR type="hsensor")', [userID],
+            (errors, results, fields) => {
+                if (errors) throw error
+                const devices = results
                 res.render('history', {
-                    username,
+                    devices,
                     fname,
-                    lname,
-                    email,
                     sessionedRender: true
                 })
-
             }
+
         )
     }
 )

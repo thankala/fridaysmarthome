@@ -14,7 +14,7 @@ router.get('/devices',
 
         req.session.lastActivity = Date.now().toString()
 
-        pool.execute('SELECT Rooms.name as roomName, Rooms.longName as roomLongName,Rooms.type as roomType, Devices.type as deviceType, Devices.name as deviceName, Devices.deviceID as deviceID, Devices.state as deviceState FROM Devices JOIN Rooms ON Devices.roomID = Rooms.roomID WHERE Devices.userID=?', [userID],
+        pool.execute('SELECT Rooms.name as roomName, Rooms.longName as roomLongName,Rooms.type as roomType, Devices.type as deviceType, Devices.name as deviceName, Devices.deviceID as deviceID, Devices.state as deviceState, JSON_EXTRACT(`value`,CONCAT("$[",JSON_LENGTH(`value` ->> "$")-1,"]")) as deviceValue FROM Devices JOIN Rooms ON Devices.roomID = Rooms.roomID WHERE Devices.userID=?', [userID],
             (error, results, fields) => {
                 if (error) throw error
                 for (k = 0; k < results.length; k++) {
@@ -70,7 +70,6 @@ router.post('/devices/add',
                     (error, results, fields) => {
 
                         const url = '/rooms/' + results[0].type + '/?id=' + results[0].roomID
-
                         if (room) {
                             req.flash('success_msg', 'Device added successfully')
                             res.redirect(room)
@@ -126,17 +125,31 @@ router.post('/devices/delete',
         const { user } = req
         const { userID, username } = user
         const { id, category } = req.query
-
-
+        const { option } = req.body
 
         pool.execute('DELETE FROM Devices WHERE userID=? AND deviceID=?', [userID, id],
             (error, results, fields) => {
-                if (error) throw error
-                req.flash('success_msg', 'Device deleted')
-                res.redirect(category)
+                pool.execute('SELECT roomID, longName as roomLongName, name as roomName, type as roomType From Rooms WHERE userID=? AND roomID=?;', [userID, option],
+                    (error, results, fields) => {
+                        if (error) throw error
+                        const url = '/rooms/' + results[0].roomType + '/?id=' + results[0].roomID
 
-            })
-    })
+                        if (category) {
+                            req.flash('success_msg', 'Device deleted successfully')
+                            res.redirect(category)
+
+                        } else {
+                            req.flash('success_msg', 'Device deleted successfully')
+                            res.redirect(url)
+                        }
+                    }
+
+                )
+            }
+        )
+    }
+)
+
 router.post('/devices/update',
     passport.authenticate('jwt', { session: true, failureRedirect: '/login' }),
     (req, res) => {
@@ -157,11 +170,8 @@ router.post('/devices/update',
                             req.flash('success_msg', 'Device updated successfully')
                             res.redirect(url)
                         }
-
-
-
-
-                    })
+                    }
+                )
             }
         )
     }

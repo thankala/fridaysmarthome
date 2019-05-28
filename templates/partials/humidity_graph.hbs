@@ -1,0 +1,118 @@
+<script>
+    var data = [
+        {{#each devices}}
+        {{#ifCond devices.deviceType '==' 'hsensor'}}
+        { "values":[
+        {{#each .}}
+        {{#each .}}
+        {{#each .}}
+    {   
+        "y": {{data}},
+        "t": {{time}}
+        
+    }   
+
+    {{#unless @last}},{{/unless}}
+    {{/each}}
+    {{/each}}
+                           
+   
+    {{/each}}
+     ]}
+     {{#unless @last}},{{/unless}}
+    {{/ifCond}}
+    {{/each}}                           
+                            ]
+
+    var chart_humidity = []
+    var ctx_humidity = []
+    var cfg_humidity = []
+    
+    //Create chart
+    for(i=0;i<data.length;i++){
+        ctx_humidity[i] = document.getElementsByClassName('humidity_chart')[i].getContext('2d');
+        ctx_humidity[i].canvas.width = 1000;
+        ctx_humidity[i].canvas.height = 300;
+        cfg_humidity.push({
+            type: 'bar',
+            data: {
+                datasets: [{
+                    label: '',
+                    borderColor: '#000',
+                    color: "#000000",
+                    fillColor: "#000000",
+                    backgroundColor: "#000000",
+                    data: data[i].values,
+                    type: 'line',
+                    pointRadius: 2,
+                    fill: false,
+                    lineTension: 0,
+                    borderWidth: 2,
+                }]
+            },
+
+            options: {
+                reverse: true,
+                legend: { display: false },
+                animation: {
+                    easing: 'linear',
+                    duration: 300,
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        time: {
+
+                            unit: 'minute'
+                        },
+                        distribution: 'series',
+                        ticks: {
+                            source: 'data',
+                            autoSkip: true,
+                            fontColor: "#000"
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Humidity (%)',
+                            fontColor: "#000"
+                        },
+                        ticks: {
+                            source: 'data',
+                            autoSkip: true,
+                            fontColor: "#000"
+                        }
+                    }]
+                },
+                tooltips: {
+                    intersect: false,
+                    mode: 'index',
+                    callbacks: {
+                        label: function (tooltipItem, myData) {
+                            var label = myData.datasets[tooltipItem.datasetIndex].label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += parseFloat(tooltipItem.value).toFixed(2);
+                            return label;
+                        }
+                    }
+                }
+            }
+        });
+
+        chart_humidity.push(new Chart(ctx_humidity[i], cfg_humidity[i]));
+    }
+    //Function add new data for "add new" button
+    function add_new_data_humidity() {
+        for (i = 0; i < 5; i++) {
+            date_humidity = date_humidity.clone().add(-1, 'd');
+            //if (date_humidity.isoWeekday() <= 5) {
+            data_humidity.unshift(randomBar(date_humidity, data_humidity[data_humidity.length - 1].y));
+            //}
+        }
+        chart_humidity.update();
+    }
+
+</script>

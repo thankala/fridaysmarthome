@@ -7,7 +7,7 @@ const validator = require('validator')
 
 
 router.get('/', (req, res) => {
-    if (req.user) {
+    if (req.cookies.jwt) {
         req.session.lastActivity = Date.now().toString()
         const { fname } = req.user
 

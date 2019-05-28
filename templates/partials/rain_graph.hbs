@@ -1,0 +1,118 @@
+<script>
+    var data = [
+        {{#each devices}}
+        {{#ifCond devices.deviceType '==' 'rainsensor'}}
+        { "values":[
+        {{#each .}}
+        {{#each .}}
+        {{#each .}}
+    {   
+        "y": {{data}},
+        "t": {{time}}
+        
+    }   
+
+    {{#unless @last}},{{/unless}}
+    {{/each}}
+    {{/each}}
+                           
+   
+    {{/each}}
+     ]}
+     {{#unless @last}},{{/unless}}
+    {{/ifCond}}
+    {{/each}}                           
+                            ]
+    
+    console.log(data[0])
+    
+
+    var chart_rain = []
+    var ctx_rain = []
+    var cfg_rain = []
+
+    //Create chart
+    for(i=0;i<data.length;i++){
+        ctx_rain[i] = document.getElementsByClassName('rain_chart')[i].getContext('2d');
+        ctx_rain[i].canvas.width = 1000;
+        ctx_rain[i].canvas.height = 300;
+        cfg_rain.push({
+            type: 'bar',
+            data: {
+                datasets: [{
+                    label: '',
+                    borderColor: '#000',
+                    color: "#000000",
+                    fillColor: "#000000",
+                    backgroundColor: "#000000",
+                    data: data[i].values,
+                    pointRadius: 2,
+                    fill: false,
+                    lineTension: 0,
+                    borderWidth: 1,
+                }]
+            },
+
+            options: {
+                reverse: true,
+                legend: { display: false },
+                animation: {
+                    easing: 'linear',
+                    duration: 300,
+                },
+                scales: {
+                    xAxes: [{
+                        type: 'time',
+                        time: {
+
+                            unit: 'minute'
+                        },
+                        distribution: 'series',
+                        ticks: {
+                            source: 'data',
+                            autoSkip: true,
+                            fontColor: "#000"
+                        }
+                    }],
+                    yAxes: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Rain (Yes/No)',
+                            fontColor: "#000"
+                        },
+                        ticks: {
+                            display: false
+                        }
+                    }]
+                },
+                tooltips: {
+                    intersect: false,
+                    mode: 'index',
+                    callbacks: {
+                        label: function (tooltipItem, myData) {
+                            var label = myData.datasets[tooltipItem.datasetIndex].label || '';
+                            if (label) {
+                                label += ': ';
+                            }
+                            label += parseFloat(tooltipItem.value).toFixed(2);
+                            return label;
+                        }
+                    }
+                }
+            }
+        });
+
+        chart_rain.push(new Chart(ctx_rain[i], cfg_rain[i]));
+    }
+    //Function add new data for "add new" button
+    function add_new_data_rain() {
+        for (i = 0; i < 5; i++) {
+            date_rain = date_rain.clone().add(-10, 'd');
+            if (date_rain.isoWeekday() <= 5) {
+                data_rain.push(randomBar_rain(date_rain, data_rain[data_rain.length - 1].y));
+            }
+        }
+        chart_rain.update();
+    }
+
+</script>
