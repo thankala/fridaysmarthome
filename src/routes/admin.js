@@ -1,8 +1,6 @@
 const express = require('express')
 
 const router = express.Router()
-
-const bcrypt = require('bcrypt')
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
 const keys = require('../config/keys')
@@ -59,22 +57,28 @@ router.get('/admin/dashboard',
                                             pool.execute('SELECT username,COUNT(DISTINCT(Rooms.roomID)) AS numOfRooms,COUNT(DISTINCT(Devices.deviceID)) as numOfDevices,users.userID,fname,lname,email,registerDate,lastLogIn,lastLogOut,CAST(JSON_EXTRACT(data,?) AS UNSIGNED) AS lastActivity FROM users LEFT JOIN Rooms ON users.userID = Rooms.userID LEFT JOIN Devices ON users.userID = Devices.userID  LEFT JOIN sessions ON users.userID = JSON_EXTRACT(data,?) WHERE userType = ? GROUP BY username,data;',
                                                 ['$.lastActivity', '$.passport.user', 'user'],
                                                 (errors, results, fields) => {
+                                                    //If you ever see this code please forgive me im young and naive 
                                                     for (k = 0; k < results.length; k++) {
-                                                        var registerDate = getDateTime(results[k].registerDate)
-                                                        var lastLogIn = getDateTime(results[k].lastLogIn)
-                                                        var lastLogOut = getDateTime(results[k].lastLogOut)
-                                                        var lastActivity = getDateTime(results[k].lastActivity)
-                                                        results[k].registerDate = registerDate
-                                                        results[k].lastLogIn = lastLogIn
-                                                        results[k].lastLogOut = lastLogOut
-                                                        results[k].lastActivity = lastActivity
+                                                        if (new Date(results[k].lastLogOut).valueOf() > new Date(results[k].lastActivity).valueOf()) {
+                                                            delete results[k].lastActivity
+                                                            if (new Date(results[k].lastLogOut).valueOf() < new Date(results[k].lastLogIn).valueOf()) {
+                                                                delete results[k].lastLogOut
+                                                            } else {
+                                                                results[k].lastLogOut = getDateTime(results[k].lastLogOut)
+
+                                                            }
+                                                        } else {
+                                                            delete results[k].lastLogOut
+                                                            results[k].lastActivity = getDateTime(results[k].lastActivity)
+                                                        }
+                                                        results[k].registerDate = getDateTime(results[k].registerDate)
+                                                        results[k].lastLogIn = getDateTime(results[k].lastLogIn)
                                                     }
                                                     const users = results
                                                     pool.execute('SELECT username,messageDate,userID,name,Contact.email,message FROM Contact LEFT JOIN users ON Contact.email = users.email;',
                                                         (erros, results, fields) => {
                                                             for (k = 0; k < results.length; k++) {
-                                                                var messageDate = new Date(results[k].messageDate);
-                                                                results[k].messageDate = messageDate.toDateString()
+                                                                results[k].messageDate = new Date(results[k].messageDate).toDateString();
                                                             }
                                                             res.render('admin_page', {
 
@@ -125,7 +129,6 @@ router.post('/admin/login', (req, res) => {
                     fname: user.fname,
                     userType: user.userType
                 };
-
 
                 /** assigns payload to req.user */
                 req.login(payload, { session: true }, (error) => {

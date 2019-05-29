@@ -134,18 +134,19 @@ router.post('/login', (req, res) => {
                 req.flash("error_msg", "Wrong Username or Password")
                 res.redirect('/login')
             } else {
-                pool.execute('UPDATE users SET lastLogIn=? WHERE userID=?', [new Date(), user.userID],
-                    (errors, results, fields) => {
-                        if (errors) throw errors;
-                        // console.log('Date added')
-                    })
-                /** This is what ends up in our JWT */
                 const payload = {
                     username: user.username,
                     userID: user.userID,
                     fname: user.fname,
                     userType: user.userType
                 };
+                pool.execute('UPDATE users SET lastLogIn=? WHERE userID=?', [new Date(), user.userID],
+                    (errors, results, fields) => {
+                        if (errors) throw errors;
+                        // console.log('Date added')
+                    })
+                /** This is what ends up in our JWT */
+                
 
                 /** Assigns payload to req.user */
                 req.login(payload, { session: true }, (error) => {
@@ -178,6 +179,7 @@ router.get('/account',
     (req, res) => {
         const { user } = req
         const { username, userID } = user
+
         req.session.lastActivity = Date.now()
 
 
@@ -300,7 +302,7 @@ router.get('/users/delete',
 )
 
 router.get('/logout', (req, res, next) => {
-    const userID = req.user.userID
+
     if (req.session) {
         // delete session object
         req.session.destroy((err) => {
@@ -308,9 +310,13 @@ router.get('/logout', (req, res, next) => {
                 return next(err);
             } else {
 
-                pool.execute('UPDATE users SET lastLogOut=? WHERE userID=?', [new Date(), userID],
-                    (errors, results, fields) => {
-                    })
+                if (req.user) {
+
+                    pool.execute('UPDATE users SET lastLogOut=? WHERE userID=?', [new Date(), req.user.userID],
+                        (errors, results, fields) => {
+                        })
+                }
+
                 res.clearCookie('jwt');
                 res.clearCookie('session')
                 req.logout();
