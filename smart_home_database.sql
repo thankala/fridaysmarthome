@@ -81,3 +81,5 @@ ADD FOREIGN KEY (roomID) REFERENCES Rooms(roomID) ON DELETE CASCADE;
 
 ALTER TABLE History
 ADD FOREIGN KEY (deviceID) REFERENCES Devices(deviceID);
+
+INSERT INTO users (userID,username,password,userType,fname,lname,email,registerDate) VALUES(1,'admin','$2b$10$jwA22uGvdFEHmWNyahIRX.MJBPe8ENywpLHFS/zqpstteV.4dCseG','admin','admin','admin','admin@fridayadmin.com','2019-05-30 14:39:46');

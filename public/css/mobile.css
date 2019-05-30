@@ -230,9 +230,24 @@
     .color-overlay {
         height: 200vh;
     }
+    #sign-out-button {
+        display: block!important;
+    }
+    #myBtn {
+        display: none;
+    }
+    #log_in_button{
+        display: none;
+    }
 
-	#myBtn {
-	display: none;
+    #sign_up_button{
+        display: none;
+    }
+    .app-form-group.buttons{
+        text-align: center
+    }
+    .login-form-group.buttons{
+        margin-top: 15px;
+        text-align: center!important;
+    }
 }
-}
-

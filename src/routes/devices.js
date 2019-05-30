@@ -6,6 +6,20 @@ const router = express.Router()
 const pool = require('../db')
 
 
+function search_array(array, valuetofind) {
+    for (i = 0; i < array.length; i++) {
+        if (array[i].roomID == valuetofind) {
+            array[i].selected = true;
+        }
+    }
+
+}
+
+function isNumber(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+
 router.get('/devices',
     passport.authenticate('jwt', { session: true, failureRedirect: '/login' }),
     (req, res) => {
@@ -37,18 +51,24 @@ router.get('/devices/add',
         const { userID, fname } = user
         const deviceType = req.query.deviceType;
         const category = req.query.category
+        const room = req.query.roomID
 
         req.session.lastActivity = Date.now().toString()
 
         pool.execute('SELECT roomID, type as roomType, name as roomName,longName as roomLongName,userID FROM Rooms WHERE userID=?', [userID],
             (error, results, fields) => {
                 if (error) throw error
+                if (room) {
+                    search_array(results, room)
+                }
+                // console.log(results)
                 res.render('add_device', {
                     rooms: results,
                     sessionedRender: true,
                     deviceType,
                     category,
-                    fname
+                    fname,
+                    room
                 })
 
             })
@@ -59,29 +79,42 @@ router.post('/devices/add',
         const { user } = req
         const { username, userID } = user
         const room = req.query.category
-
         const { name, camera_link } = req.body
-        const [deviceType, roomID] = req.body.option
-
-        pool.execute('INSERT INTO Devices(type,src_link_of_live_streaming,name,userID,roomID) VALUES (?,?,?,?,?)', [deviceType, camera_link, name, userID, roomID],
-            (error, results, fields) => {
-                if (error) throw error
-                pool.execute('SELECT type,roomID From Rooms WHERE roomID=?', [roomID],
+        console.log(room)
+        try {
+            const [deviceType, roomID] = req.body.option
+            if (!(isNumber(roomID))) {
+                console.log('wtf')
+                req.flash('error_msg', 'Error adding device')
+                res.redirect(req.originalUrl)
+            } else {
+                pool.execute('INSERT INTO Devices(type,src_link_of_live_streaming,name,userID,roomID) VALUES (?,?,?,?,?)', [deviceType, camera_link, name, userID, roomID],
                     (error, results, fields) => {
+                        if (error) throw error
+                        pool.execute('SELECT type,roomID From Rooms WHERE roomID=?', [roomID],
+                            (error, results, fields) => {
+                                const url = '/rooms/' + results[0].type + '/?id=' + results[0].roomID
+                                console.log(url)
+                                if (room) {
+                                    req.flash('success_msg', 'Device added successfully')
+                                    res.redirect(room)
 
-                        const url = '/rooms/' + results[0].type + '/?id=' + results[0].roomID
-                        if (room) {
-                            req.flash('success_msg', 'Device added successfully')
-                            res.redirect(room)
-
-                        } else {
-                            req.flash('success_msg', 'Device added successfully')
-                            res.redirect(url)
-                        }
+                                } else {
+                                    req.flash('success_msg', 'Device added successfully')
+                                    res.redirect(url)
+                                }
+                            }
+                        )
                     }
                 )
             }
-        )
+        } catch (e) {
+            req.flash('error_msg', 'Error adding device')
+            res.redirect(req.originalUrl)
+        }
+
+
+
     }
 )
 
@@ -100,7 +133,6 @@ router.get('/devices/edit',
                 const device = results
                 pool.execute('SELECT roomID, longName as roomLongName, name as roomName, type as roomType From Rooms WHERE userID=?;', [userID],
                     (errors, results, fields) => {
-
                         res.render('edit_device', {
                             device,
                             sessionedRender: true,

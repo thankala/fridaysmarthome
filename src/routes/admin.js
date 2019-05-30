@@ -33,6 +33,10 @@ router.get('/admin/login', (req, res) => {
     });
 })
 
+router.get('/admin/', (req, res) => {
+    res.redirect('/admin/dashboard')
+})
+
 router.get('/admin/dashboard',
     passport.authenticate('jwt', { session: true, failureRedirect: '/admin/login' }),
     (req, res) => {
@@ -54,11 +58,35 @@ router.get('/admin/dashboard',
                                     pool.execute('SELECT COUNT(roomID) as numOfRooms FROM Rooms JOIN users on Rooms.userID = users.userID WHERE userType = ?', ['user'],
                                         (errors, results, fields) => {
                                             const { numOfRooms } = results[0]
-                                            pool.execute('SELECT username,COUNT(DISTINCT(Rooms.roomID)) AS numOfRooms,COUNT(DISTINCT(Devices.deviceID)) as numOfDevices,users.userID,fname,lname,email,registerDate,lastLogIn,lastLogOut,CAST(JSON_EXTRACT(data,?) AS UNSIGNED) AS lastActivity FROM users LEFT JOIN Rooms ON users.userID = Rooms.userID LEFT JOIN Devices ON users.userID = Devices.userID  LEFT JOIN sessions ON users.userID = JSON_EXTRACT(data,?) WHERE userType = ? GROUP BY username,data;',
-                                                ['$.lastActivity', '$.passport.user', 'user'],
+                                            pool.execute('SELECT users.userID,username,email,COUNT(DISTINCT(Rooms.roomID)) AS numOfRooms, COUNT(DISTINCT(Devices.deviceID)) AS numOfDevices,registerDate,lastLogIn,lastLogOut,MAX(CAST(JSON_EXTRACT(data,"$.lastActivity") AS UNSIGNED)) as lastActivity FROM users LEFT JOIN sessions on users.userID = JSON_EXTRACT(data,"$.passport.user") LEFT JOIN Devices ON Devices.userID = users.userID LEFT JOIN Rooms ON Rooms.userID = users.userID  WHERE userType="user" GROUP BY users.userID;', [],
                                                 (errors, results, fields) => {
+                                                    // var newArray = results
+
+                                                    // for (i = 1; i < results.length; i++) {
+                                                    //     // console.log(results[i])
+                                                    //     console.log(i)
+                                                    //     if (results[i - 1].username === results[i].username) {
+                                                    //         if (new Date(results[i - 1].lastActivity).valueOf() < new Date(results[i].lastActivity).valueOf()) {
+                                                    //             let value = results[i - 1].lastActivity
+                                                    //             results = results.filter(function (item) {
+                                                    //                 return item.lastActivity != value
+                                                    //             })
+
+                                                    //         } else {
+                                                    //             let value = results[i].lastActivity
+                                                    //             results = results.filter(function (item) {
+                                                    //                 return item.lastActivity != value
+                                                    //             })
+
+                                                    //         }
+                                                    //     }
+
+                                                    // }
+                                                    // console.log(results)
+
                                                     //If you ever see this code please forgive me im young and naive 
                                                     for (k = 0; k < results.length; k++) {
+
                                                         if (new Date(results[k].lastLogOut).valueOf() > new Date(results[k].lastActivity).valueOf()) {
                                                             delete results[k].lastActivity
                                                             if (new Date(results[k].lastLogOut).valueOf() < new Date(results[k].lastLogIn).valueOf()) {

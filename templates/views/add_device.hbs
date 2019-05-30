@@ -45,6 +45,7 @@
             <div class="container">
                 <form class="form_container" action="/devices/add/?category={{category}}" method="POST">
                     <h1>Select Your Device</h1>
+                    {{>messages}}
 
                     <select class="device_option" name="option" id="select_device">
 
@@ -72,11 +73,7 @@
                         </optgroup>
                     </select>
 
-                    <!-- <script>
-                        if (document.getElementById("select_device").selectedIndex == "2"){
-                            console.log("hiii")
-                        }
-                    </script> -->
+
 
                     <h3>Select room</h3>
                     <select class="device_option" name="option">
@@ -86,22 +83,33 @@
                         {{#if rooms}}
                         {{#each rooms}}
                         {{#ifCond roomType '==' 'livingroom'}}
-                        <option value={{roomID}}>&#xf26c; &ensp; {{roomName}} {{roomLongName}}</option>
+                        <option value={{roomID}} {{#if selected}} selected {{/if}}>&#xf26c; &ensp;
+                            {{roomName}}
+                            {{roomLongName}}</option>
                         {{/ifCond}}
                         {{#ifCond roomType '==' 'bedroom'}}
-                        <option value={{roomID}}>&#xf236; &ensp; {{roomName}} {{roomLongName}}</option>
+                        <option value={{roomID}} {{#if selected}} selected {{/if}}>&#xf236; &ensp;
+                            {{roomName}}
+                            {{roomLongName}}</option>
                         {{/ifCond}}
                         {{#ifCond roomType '==' 'kitchenroom'}}
-                        <option value={{roomID}}>&#xf000; &ensp; {{roomName}} {{roomLongName}}</option>
+                        <option value={{roomID}} {{#if selected}} selected {{/if}}>&#xf000; &ensp;
+                            {{roomName}}
+                            {{roomLongName}}</option>
                         {{/ifCond}}
                         {{#ifCond roomType '==' 'bathroom'}}
-                        <option value={{roomID}}>&#xf2cd; &ensp; {{roomName}} {{roomLongName}}</option>
+                        <option value={{roomID}} {{#if selected}} selected {{/if}}>&#xf2cd; &ensp;
+                            {{roomName}}
+                            {{roomLongName}}</option>
                         {{/ifCond}}
                         {{#ifCond roomType '==' 'gardenroom'}}
-                        <option value={{roomID}}>&#xf1bb; &ensp; {{roomName}} {{roomLongName}}</option>
+                        <option value={{roomID}} {{#if selected}} selected {{/if}}>&#xf1bb; &ensp;
+                            {{roomName}} {{roomLongName}}</option>
                         {{/ifCond}}
                         {{#ifCond roomType '==' 'otherroom'}}
-                        <option value={{roomID}}>&#xf0c1; &ensp; {{roomName}} {{roomLongName}}</option>
+                        <option value={{roomID}} {{#if selected}} selected {{/if}}>&#xf0c1; &ensp;
+                            {{roomName}}
+                            {{roomLongName}}</option>
                         {{/ifCond}}
                         {{/each}}
                         {{/if}}
@@ -121,12 +129,12 @@
 
                     <p><button type="submit">Add</button></p>
                 </form>
-
             </div>
+            {{>footer_mini}}
         </div>
 
 
-        {{>footer_mini}}
+
 
     </div>
 

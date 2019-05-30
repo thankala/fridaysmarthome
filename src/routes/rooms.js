@@ -81,7 +81,6 @@ router.get('/rooms/*room',
 
         req.session.lastActivity = Date.now().toString()
 
-
         pool.execute('SELECT Rooms.roomID as roomID, Rooms.name as roomName, Rooms.longName as roomLongName, Devices.type as deviceType, Devices.name as deviceName, Devices.deviceID as deviceID, Devices.state as deviceState, JSON_EXTRACT(`value`,CONCAT("$[",JSON_LENGTH(`value` ->> "$")-1,"]")) as deviceValue' + ' FROM Rooms LEFT JOIN Devices on Rooms.roomID = Devices.roomID WHERE Rooms.roomID=? AND Rooms.userID=?', [roomID, userID],
             (error, results, fields) => {
                 if (error) throw error
@@ -93,7 +92,8 @@ router.get('/rooms/*room',
                     roomType: results[0].roomLongName,
                     roomID: results[0].roomID,
                     category,
-                    fname
+                    fname,
+                    roomID
 
                 })
 

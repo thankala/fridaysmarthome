@@ -68,7 +68,7 @@
                     <br>
                     <button id="addData_humidity" onclick="add_new_data_humidity();">Add Data</button>
                 </div>
-                 {{/ifCond}}
+                {{/ifCond}}
                 {{#ifCond devices.deviceType '==' 'rainsensor'}}
                 <h3>Rain</h3>
                 <div class="graph_box">
@@ -76,7 +76,7 @@
                     <br>
                     <button id="addData_rain" onclick="add_new_data_rain();">Add Data</button>
                 </div>
-                 {{/ifCond}}
+                {{/ifCond}}
                 {{/each}}
                 {{/if}}
             </div>
@@ -84,8 +84,9 @@
             {{>humidity_graph}}
             {{>rain_graph}}
 
+            {{>footer_mini}}
         </div>
-        {{>footer_mini}}
+
 
 
     </div>

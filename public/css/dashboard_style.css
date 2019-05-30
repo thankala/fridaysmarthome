@@ -99,6 +99,7 @@
 }
 
 .account_box_inside {
+    overflow: overlay;
     width: 95%;
     height: auto;
     margin: 0 auto;

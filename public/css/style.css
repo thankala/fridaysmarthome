@@ -1036,3 +1036,7 @@ input[type="text"], input[type="password"] {
 .device_section {
   display: flow-root;
 }
+
+#sign-out-button {
+  display: none!important;
+}

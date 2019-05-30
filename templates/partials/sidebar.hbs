@@ -13,4 +13,9 @@
     <a href="/#services"><i class="fa fa-cubes"></i>&ensp;Services</a>
     <a href="/#team"><i class="fa fa-address-card"></i>&ensp;Team</a>
     <a href="/#contact"><i class="fa fa-envelope"></i>&ensp;Contact</a>
+
+    {{#if sessionedRender}}
+    <a href="/logout" id="sign-out-button"><i class="fa fa-sign-out" aria-hidden="true"></i>&ensp;Sign Out</a>
+
+    {{/if}}
 </div>

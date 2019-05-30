@@ -30,7 +30,7 @@
             {{/ifCond}}
             {{/each}}
             {{/if}}
-            <a href="/devices/add/?deviceType=light">
+            <a href="/devices/add/?deviceType=light&roomID={{roomID}}">
                 <div class="device" id="add_device">
                     <p>Add light</p>
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -60,7 +60,7 @@
             {{/ifCond}}
             {{/each}}
             {{/if}}
-            <a href="/devices/add/?deviceType=socket">
+            <a href="/devices/add/?deviceType=socket&roomID={{roomID}}">
                 <div class="device" id="add_device">
                     <p>Add Socket</p>
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -86,7 +86,7 @@
             {{/ifCond}}
             {{/each}}
             {{/if}}
-            <a href="/devices/add/?deviceType=camera">
+            <a href="/devices/add/?deviceType=camera&roomID={{roomID}}">
                 <div class="device" id="add_device">
                     <p>Add Camera</p>
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
@@ -129,13 +129,14 @@
                 <div class="device">
                     <i class="fa fa-tint" aria-hidden="true"></i>
                     <p>Raindrop Sensor {{deviceName}}</p>
-                    <p>Status: <span id="rain_status">{{#ifCond deviceValue.data '==' '1'}} True {{else}} False {{/ifCond}}</span></p>
+                    <p>Status: <span id="rain_status">{{#ifCond deviceValue.data '==' '1'}} True {{else}} False
+                            {{/ifCond}}</span></p>
                 </div>
             </a>
             {{/ifCond}}
             {{/each}}
             {{/if}}
-            <a href="/devices/add/?deviceType=other">
+            <a href="/devices/add/?deviceType=other&roomID={{roomID}}">
                 <div class="device" id="add_device">
                     <p>Add</p>
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
