@@ -144,6 +144,12 @@
 }
 
 @media only screen and (max-width: 500px) {
+    html, body {
+        overflow-x: hidden;
+    }
+    body {
+        position: relative
+    }
     .section_1 .login_wrapper {
         width: 60%;
         margin-left: 10%;
@@ -155,7 +161,9 @@
         margin-top: 25px;
     }
     #menu a {
-        padding: 8px;
+        padding: 6px 20px;
+        margin-right: 25%;
+        font-size: 23px;
     }
     #account_logo .fa {
         font-size: 20px;
@@ -236,18 +244,31 @@
     #myBtn {
         display: none;
     }
-    #log_in_button{
+    #log_in_button {
         display: none;
     }
-
-    #sign_up_button{
+    #sign_up_button {
         display: none;
     }
-    .app-form-group.buttons{
+    .app-form-group.buttons {
         text-align: center
     }
-    .login-form-group.buttons{
+    .login-form-group.buttons {
         margin-top: 15px;
         text-align: center!important;
+    }
+    #register_button:hover {
+        border: 2px solid #383838;
+        background-color: black;
+    }
+    #register_button {
+        display: inline-block;
+        border-radius: 10%;
+        background-color: #383838;
+        padding: 10px 10px;
+        margin-right: 10px;
+    }
+    .contact_wrapper{
+        width: 70%!important;
     }
 }

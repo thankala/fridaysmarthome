@@ -39,12 +39,12 @@ router.post('/recover', (req, res) => {
             (error, results, fields) => {
                 if (error) throw error
                 if (results.length < 1) {
-                    res.send("User not found")
+                    req.flash("error_msg","Email not found")
+                    res.redirect('/recover')
                 } else {
                     var token = crypto.randomBytes(15).toString('hex')
                     var expire = Date.now() + 360000
                     
-
                     pool.execute('UPDATE users SET resetPasswordToken=?, resetPasswordExpires=? WHERE userID=?', [token, expire, results[0].userID],
                         (error, results, fields) => {
                             const mailOptions = {

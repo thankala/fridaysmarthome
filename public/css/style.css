@@ -2,6 +2,12 @@ html {
   background: #343434;
 }
 
+/* new stuff */
+
+
+
+/* */
+
 body {
   background-color: #343434;
   margin: 0;
@@ -99,6 +105,9 @@ nav #logo-container img {
 #sign_up_button {
   border-radius: 10%;
   background-color: #383838;
+}
+#register_button {
+  display: none
 }
 
 #log_in_button:hover {
@@ -986,6 +995,7 @@ input[type="text"], input[type="password"] {
 /* Alerts */
 
 .alert {
+  text-align: center;
   width: 80%;
   margin: 0 auto;
   padding: 5px 20px;
