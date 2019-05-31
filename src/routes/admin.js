@@ -58,7 +58,7 @@ router.get('/admin/dashboard',
                                     pool.execute('SELECT COUNT(roomID) as numOfRooms FROM Rooms JOIN users on Rooms.userID = users.userID WHERE userType = ?', ['user'],
                                         (errors, results, fields) => {
                                             const { numOfRooms } = results[0]
-                                            pool.execute('SELECT users.userID,username,email,COUNT(DISTINCT(Rooms.roomID)) AS numOfRooms, COUNT(DISTINCT(Devices.deviceID)) AS numOfDevices,registerDate,lastLogIn,lastLogOut,MAX(CAST(JSON_EXTRACT(data,"$.lastActivity") AS UNSIGNED)) as lastActivity FROM users LEFT JOIN sessions on users.userID = JSON_EXTRACT(data,"$.passport.user") LEFT JOIN Devices ON Devices.userID = users.userID LEFT JOIN Rooms ON Rooms.userID = users.userID  WHERE userType="user" GROUP BY users.userID;', [],
+                                            pool.execute('SELECT users.userID,fname,lname,username,email,COUNT(DISTINCT(Rooms.roomID)) AS numOfRooms, COUNT(DISTINCT(Devices.deviceID)) AS numOfDevices,registerDate,lastLogIn,lastLogOut,MAX(CAST(JSON_EXTRACT(data,"$.lastActivity") AS UNSIGNED)) as lastActivity FROM users LEFT JOIN sessions on users.userID = JSON_EXTRACT(data,"$.passport.user") LEFT JOIN Devices ON Devices.userID = users.userID LEFT JOIN Rooms ON Rooms.userID = users.userID  WHERE userType="user" GROUP BY users.userID;', [],
                                                 (errors, results, fields) => {
                                                     // var newArray = results
 
@@ -103,6 +103,7 @@ router.get('/admin/dashboard',
                                                         results[k].lastLogIn = getDateTime(results[k].lastLogIn)
                                                     }
                                                     const users = results
+                                                   
                                                     pool.execute('SELECT username,messageDate,userID,name,Contact.email,message FROM Contact LEFT JOIN users ON Contact.email = users.email;',
                                                         (erros, results, fields) => {
                                                             for (k = 0; k < results.length; k++) {

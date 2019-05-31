@@ -44,6 +44,7 @@
             <div class="container">
                 <form class="form_container" action="/rooms/add" method="POST">
                     <h1>Select Room</h1>
+                    {{>messages}}
                     <select class="device_option" name="option">
                         <option value="" disabled selected>Rooms</option>
                         <option value="Living Room">&#xf26c; &ensp; Living Room</option>

@@ -57,24 +57,18 @@
                 <h3>Temperature</h3>
                 <div class="graph_box">
                     <canvas class="temperature_chart" width="100%" height="100%"></canvas>
-                    <br>
-                    <button id="addData_temperature" onclick="add_new_data_temperature();">Add Data</button>
                 </div>
                 {{/ifCond}}
                 {{#ifCond devices.deviceType '==' 'hsensor'}}
                 <h3>Humidity</h3>
                 <div class="graph_box">
                     <canvas class="humidity_chart" width="100%" height="100%"></canvas>
-                    <br>
-                    <button id="addData_humidity" onclick="add_new_data_humidity();">Add Data</button>
                 </div>
                 {{/ifCond}}
                 {{#ifCond devices.deviceType '==' 'rainsensor'}}
                 <h3>Rain</h3>
                 <div class="graph_box">
                     <canvas class="rain_chart" width="100%" height="100%"></canvas>
-                    <br>
-                    <button id="addData_rain" onclick="add_new_data_rain();">Add Data</button>
                 </div>
                 {{/ifCond}}
                 {{/each}}

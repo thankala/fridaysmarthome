@@ -13,3 +13,20 @@
 body{
     text-align: center;
 }
+
+#logo-container {
+    padding: 0 !important;
+    margin: 0 auto !important;
+    width: 100% !important;
+    height: 100%;
+}
+
+#top-bar {
+    width: 100%;
+}
+#logo{
+    margin: 0 auto;
+}
+nav #logo-container img {
+    padding-top: 12px;
+}

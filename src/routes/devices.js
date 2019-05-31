@@ -76,18 +76,19 @@ router.get('/devices/add',
 router.post('/devices/add',
     passport.authenticate('jwt', { session: true, failureRedirect: '/login' }),
     (req, res) => {
-        const { user } = req
-        const { username, userID } = user
-        const room = req.query.category
-        const { name, camera_link } = req.body
-        console.log(room)
+        let { user } = req
+        let { username, userID } = user
+        let room = req.query.category
+        let { name, camera_link } = req.body
         try {
-            const [deviceType, roomID] = req.body.option
+            let [deviceType, roomID] = req.body.option
             if (!(isNumber(roomID))) {
-                console.log('wtf')
                 req.flash('error_msg', 'Error adding device')
                 res.redirect(req.originalUrl)
             } else {
+                if (camera_link == undefined) {
+                    camera_link = ""
+                }
                 pool.execute('INSERT INTO Devices(type,src_link_of_live_streaming,name,userID,roomID) VALUES (?,?,?,?,?)', [deviceType, camera_link, name, userID, roomID],
                     (error, results, fields) => {
                         if (error) throw error

@@ -56,18 +56,23 @@ router.post('/rooms/add',
         const { userID } = user
         const { option, name } = req.body
 
-        req.session.lastActivity = Date.now().toString()
+        if (option == undefined) {
+            req.flash("error_msg", "Please select room")
+            res.redirect(req.originalUrl)
+        } else {
+            req.session.lastActivity = Date.now().toString()
 
-        type = option.replace(/\s/g, '').toLowerCase();
+            type = option.replace(/\s/g, '').toLowerCase();
 
-        pool.execute('INSERT INTO Rooms (name,type,userID,longName) VALUES (?,?,?,?)', [name, type, userID, option],
-            (error, results, fields) => {
-                if (error) throw error
-                req.flash('success_msg', "Room added!")
-                res.redirect('/rooms')
+            pool.execute('INSERT INTO Rooms (name,type,userID,longName) VALUES (?,?,?,?)', [name, type, userID, option],
+                (error, results, fields) => {
+                    if (error) throw error
+                    req.flash('success_msg', "Room added!")
+                    res.redirect('/rooms')
 
-            }
-        )
+                }
+            )
+        }
     }
 )
 

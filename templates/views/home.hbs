@@ -8,7 +8,7 @@
     <link rel="shortcut icon" type="image/png" href="images/favicon.png" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" type="text/css" href="/css/home_style.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="stylesheet" type="text/css" href="/css/home_dashboard_style.css">
     <link rel="stylesheet" type="text/css" href="/css/home_custom_style.css">
     <link rel="stylesheet" type="text/css" href="/css/mobile.css">
@@ -34,13 +34,10 @@
 
 <body>
     <nav id="top-bar">
-        {{>menu}}
-    </nav>
-    <div class="content" style="background-color: #343434;">
-        <div id="sidebar">
-            {{>sidebar}}
+        <div id="logo-container">
+            <a id="logo" href="/"><img src="/images/hero_logo.png"></a>
         </div>
-    </div>
+    </nav>
     <div id="main">
         <div class='section_1'>
             <div class="dashboard_container">
@@ -113,7 +110,8 @@
                                     <div class="device">
                                         <i class="fa fa-cloud" aria-hidden="true"></i>
                                         <p>Raindrop Sensor</p>
-                                        <p>Status: <span id="rain_status">{{#ifCond deviceValue.data '==' '1'}} True {{else}} False {{/ifCond}}</span></p>
+                                        <p>Status: <span id="rain_status">{{#ifCond deviceValue.data '==' '1'}} True
+                                                {{else}} False {{/ifCond}}</span></p>
                                     </div>
                                     {{/ifCond}}
                                     {{/each}}
@@ -128,7 +126,7 @@
             </div>
             {{>footer_mini}}
         </div>
-        
+
     </div>
 
 
