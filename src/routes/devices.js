@@ -188,9 +188,10 @@ router.post('/devices/update',
         const { user } = req
         const { userID } = user
         const { id, category } = req.query
-        const { option, name } = req.body
+        const { option, name, camera_link } = req.body
 
-        pool.execute('UPDATE Devices SET roomID=? , name=? WHERE deviceID =? AND userID=?', [option, name, id, userID],
+        console.log(req.body);
+        pool.execute('UPDATE Devices SET roomID=? , src_link_of_live_streaming=? , name=? WHERE deviceID =? AND userID=?', [option, camera_link, name, id, userID],
             (errors, results, fields) => {
                 pool.execute('SELECT type,roomID From Rooms WHERE roomID=?', [option],
                     (error, results, fields) => {

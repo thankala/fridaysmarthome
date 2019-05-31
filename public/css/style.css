@@ -200,6 +200,7 @@ nav #logo-container img {
 .section_1 {
   background: #000 url(../images/home5.jpg);
   height: 100vh;
+  min-height: 100vh;
   color: #fff;
   width: 100%;
   background-position: center;
