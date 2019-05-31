@@ -103,3 +103,17 @@ function topFunction() {
   }, 800);
 }
 
+
+//When the camera is not selected in add device the camera api input type will be disabled
+function if_camera_is_selected(that) {
+  if (that.value == "camera") {
+    document.querySelector("#camera_link").removeAttribute("disabled");
+    document.querySelector("#camera_link").style = "background-color:white;"
+  }
+  else {
+    document.querySelector("#camera_link").setAttribute("disabled", "");
+    document.querySelector("#camera_link").style = "background-color:#f2f2f2;"
+
+  }
+}
+

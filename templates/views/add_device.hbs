@@ -47,7 +47,8 @@
                     <h1>Select Your Device</h1>
                     {{>messages}}
 
-                    <select class="device_option" name="option" id="select_device">
+                    <select class="device_option" name="option" id="select_device"
+                        onchange="if_camera_is_selected(this);">
 
                         <option value="" disabled selected>Devices</option>
                         {{!-- {{#if deviceType}} --}}
@@ -124,7 +125,9 @@
                                 aria-hidden="true"></i></a></h3>
                     <!-- <img src="images/youtube_emb.png"  style="width:60%; margin:0 20% 0 20%;"> -->
                     <!-- <img src="images/youtube_emb.png"  style="width:300px;"> -->
-                    <input type="text" id="camera_link" name="camera_link" placeholder="Example: DL9X5u-wDgw">
+                    <input type="text" id="camera_link" name="camera_link" placeholder="Example: DL9X5u-wDgw"
+                        {{#ifCond deviceType '==' 'camera'}} {{else}} disabled style="background-color:#f2f2f2;"
+                        {{/ifCond}}>
 
 
                     <p><button type="submit">Add</button></p>
