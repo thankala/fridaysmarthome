@@ -150,6 +150,9 @@
     body {
         position: relative
     }
+    input, textarea, button, select, a {
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    }
     .section_1 .login_wrapper {
         width: 60%;
         margin-left: 10%;
