@@ -1,3 +1,6 @@
+DROP DATABASE IF EXISTS fridaysmarthome;
+CREATE DATABASE fridaysmarthome;
+USE fridaysmarthome;
 SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS Rooms;
@@ -49,16 +52,6 @@ CREATE TABLE Devices
   PRIMARY KEY (deviceID)
 );
 
-CREATE TABLE History
-(
-  measurementID INT NOT NULL AUTO_INCREMENT,
-  date DATE NOT NULL,
-  time TIME NOT NULL,
-  value FLOAT NOT NULL,
-  deviceID INT NOT NULL,
-  PRIMARY KEY (measurementID)
-);
-
 CREATE TABLE Contact
 (
   contactID INT NOT NULL AUTO_INCREMENT,
@@ -78,8 +71,5 @@ ADD FOREIGN KEY (userID) REFERENCES users(userID) ON DELETE CASCADE;
 
 ALTER TABLE Devices
 ADD FOREIGN KEY (roomID) REFERENCES Rooms(roomID) ON DELETE CASCADE;
-
-ALTER TABLE History
-ADD FOREIGN KEY (deviceID) REFERENCES Devices(deviceID);
 
 INSERT INTO users (userID,username,password,userType,fname,lname,email,registerDate) VALUES(1,'admin','$2b$10$jwA22uGvdFEHmWNyahIRX.MJBPe8ENywpLHFS/zqpstteV.4dCseG','admin','admin','admin','admin@fridayadmin.com','2019-05-30 14:39:46');

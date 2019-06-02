@@ -7,14 +7,20 @@ const path = require('path')
 const flash = require('connect-flash')
 const passport = require('passport')
 const keys = require('./config/keys')
+const { host, user, database, password } = require('./config/dbconfig')
+
+//Directories
 const publicPath = path.join(__dirname, "../public")
 const viewsPath = path.join(__dirname, "../templates/views")
 const partialsPath = path.join(__dirname, "../templates/partials")
 
+//Init express
 const app = express()
 
+//Cookie parser
 const cookieParser = require('cookie-parser')
 
+//Port
 const PORT = process.env.PORT || 3000;
 
 //Passport
@@ -75,7 +81,6 @@ hbs.registerHelper('debug', function (optionValue) {
 
 
 // Body-Parser
-// app.use(require('body-parser').urlencoded({ extended: false }));
 var bodyParser = require('body-parser');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -93,10 +98,10 @@ const sessionHandler = session({
     secret: keys.secret,
     rolling: true,
     store: new MySQLStore({
-        host: 'localhost',
-        user: 'root',
-        database: 'home',
-        password: 'than2211',
+        host,
+        user,
+        database,
+        password,
         waitForConnections: true,
         connectionLimit: 10,
         queueLimit: 0,
@@ -108,6 +113,7 @@ const sessionHandler = session({
     saveUninitialized: false
 });
 
+//Custom middleware to not pass session in remotedevices route
 app.use(function (req, res, next) {
     // if path does not start with /error/, then invoke session middleware
     if (req.url.indexOf("/remotedevices") !== 0) {
@@ -118,6 +124,7 @@ app.use(function (req, res, next) {
 });
 
 // Globar Vars (Custom Middleware) for flash messages
+//Dont pass flash in remote devices route
 app.use((req, res, next) => {
     if (req.url.indexOf("/remotedevices/") !== 0) {
         res.locals.success_msg = req.flash('success_msg');
@@ -134,7 +141,6 @@ app.use(express.static(publicPath))
 //Passport Init (After Session init)
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 //Routes
 app.use('/', require('./routes/index'))

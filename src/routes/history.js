@@ -23,7 +23,6 @@ router.get('/history',
                     sessionedRender: true
                 })
             }
-
         )
     }
 )

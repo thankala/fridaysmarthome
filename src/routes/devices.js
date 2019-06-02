@@ -12,7 +12,6 @@ function search_array(array, valuetofind) {
             array[i].selected = true;
         }
     }
-
 }
 
 function isNumber(n) {
@@ -39,10 +38,10 @@ router.get('/devices',
                     sessionedRender: true,
                     fname
                 })
-
-            })
-    })
-
+            }
+        )
+    }
+)
 
 router.get('/devices/add',
     passport.authenticate('jwt', { session: true, failureRedirect: '/login' }),
@@ -61,7 +60,6 @@ router.get('/devices/add',
                 if (room) {
                     search_array(results, room)
                 }
-                // console.log(results)
                 res.render('add_device', {
                     rooms: results,
                     sessionedRender: true,
@@ -71,8 +69,11 @@ router.get('/devices/add',
                     room
                 })
 
-            })
-    })
+            }
+        )
+    }
+)
+
 router.post('/devices/add',
     passport.authenticate('jwt', { session: true, failureRedirect: '/login' }),
     (req, res) => {
@@ -87,7 +88,7 @@ router.post('/devices/add',
                 res.redirect(req.originalUrl)
             } else {
                 if (camera_link == undefined) {
-                    camera_link = ""
+                    camera_link = null
                 }
                 pool.execute('INSERT INTO Devices(type,src_link_of_live_streaming,name,userID,roomID) VALUES (?,?,?,?,?)', [deviceType, camera_link, name, userID, roomID],
                     (error, results, fields) => {
@@ -95,7 +96,6 @@ router.post('/devices/add',
                         pool.execute('SELECT type,roomID From Rooms WHERE roomID=?', [roomID],
                             (error, results, fields) => {
                                 const url = '/rooms/' + results[0].type + '/?id=' + results[0].roomID
-                                console.log(url)
                                 if (room) {
                                     req.flash('success_msg', 'Device added successfully')
                                     res.redirect(room)
@@ -113,9 +113,6 @@ router.post('/devices/add',
             req.flash('error_msg', 'Error adding device')
             res.redirect(req.originalUrl)
         }
-
-
-
     }
 )
 
@@ -144,14 +141,13 @@ router.get('/devices/edit',
                             rooms: results
 
                         })
-
-                    })
-
-
-
-            })
+                    }
+                )
+            }
+        )
     }
 )
+
 router.post('/devices/delete',
     passport.authenticate('jwt', { session: true, failureRedirect: '/login' }),
     (req, res) => {
@@ -159,6 +155,7 @@ router.post('/devices/delete',
         const { userID, username } = user
         const { id, category } = req.query
         const { option } = req.body
+        req.session.lastActivity = Date.now().toString()
 
         pool.execute('DELETE FROM Devices WHERE userID=? AND deviceID=?', [userID, id],
             (error, results, fields) => {
@@ -189,9 +186,11 @@ router.post('/devices/update',
         const { user } = req
         const { userID } = user
         const { id, category } = req.query
-        const { option, name, camera_link } = req.body
-
-        console.log(req.body);
+        var { option, name, camera_link } = req.body
+        req.session.lastActivity = Date.now().toString()
+        if (camera_link == undefined) {
+            camera_link = null
+        }
         pool.execute('UPDATE Devices SET roomID=? , src_link_of_live_streaming=? , name=? WHERE deviceID =? AND userID=?', [option, camera_link, name, id, userID],
             (errors, results, fields) => {
                 pool.execute('SELECT type,roomID From Rooms WHERE roomID=?', [option],
@@ -210,6 +209,7 @@ router.post('/devices/update',
         )
     }
 )
+
 router.get('/devices/state',
     passport.authenticate('jwt', { session: true }),
     (req, res) => {
@@ -217,11 +217,13 @@ router.get('/devices/state',
         const { userID } = user
         const deviceID = req.query.id
         const state = req.query.state
+        req.session.lastActivity = Date.now().toString()
 
         pool.execute('UPDATE Devices SET state=? WHERE deviceID =? AND userID=?', [state, deviceID, userID],
             (errors, results, fields) => {
                 if (errors) throw errors;
-            })
+            }
+        )
     }
 )
 

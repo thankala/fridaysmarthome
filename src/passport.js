@@ -1,12 +1,12 @@
 const pool = require('./db')
+
 const localStrategy = require('passport-local').Strategy;
 const passportJWT = require('passport-jwt');
 const JWTStrategy = passportJWT.Strategy;
+
 const bcrypt = require('bcrypt')
 
 const { secret } = require('./config/keys');
-
-
 
 module.exports = (passport) => {
     passport.use(
@@ -34,28 +34,30 @@ module.exports = (passport) => {
 
                 })
 
-            }))
+            }
+        )
+    )
 
+    //Extract jwt
     passport.use(new JWTStrategy({
         jwtFromRequest: req => req.cookies.jwt,
         // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
         secretOrKey: secret,
     },
         (jwtPayload, done) => {
-            // console.log(jwtPayload)
             return done(null, jwtPayload);
         }
     ));
 
+    //Serialize user instance
     passport.serializeUser(function (user, done) {
-
         done(null, user.userID);
-    });
+    })
 
+    //Derialize user instance
     passport.deserializeUser(function (id, done) {
-
         pool.execute('SELECT username,userID,fname,userType FROM users WHERE userID=?', [id], (errors, results, fields) => {
             done(errors, results[0]);
-        });
-    });
+        })
+    })
 }

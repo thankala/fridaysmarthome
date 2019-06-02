@@ -43,8 +43,6 @@ function checkUsername(username, callback) {
 
 //Register handler
 router.post('/register', (req, res) => {
-
-
     const { fname, lname, email, username, password, password2 } = req.body;
 
     //Server-side checks for correct credentials during user register
@@ -105,10 +103,10 @@ router.post('/register', (req, res) => {
                                 if (error) throw error;
                                 req.flash('success_msg', 'You are now registered! Please Login')
                                 res.redirect('/login')
-                            })
+                            }
+                        )
                     })
                 })
-
             } else {
                 res.render('signup', {
                     errors,
@@ -122,7 +120,6 @@ router.post('/register', (req, res) => {
     }
 })
 
-
 //Login Handler
 router.post('/login', (req, res) => {
     passport.authenticate(
@@ -134,40 +131,37 @@ router.post('/login', (req, res) => {
                 req.flash("error_msg", "Wrong Username or Password")
                 res.redirect('/login')
             } else {
+                pool.execute('UPDATE users SET lastLogIn=? WHERE userID=?', [new Date(), user.userID],
+                    (errors, results, fields) => {
+                        if (errors) throw errors;
+                    }
+                )
+                /** This is what ends up in our JWT */
                 const payload = {
                     username: user.username,
                     userID: user.userID,
                     fname: user.fname,
                     userType: user.userType
                 };
-                pool.execute('UPDATE users SET lastLogIn=? WHERE userID=?', [new Date(), user.userID],
-                    (errors, results, fields) => {
-                        if (errors) throw errors;
-                        // console.log('Date added')
-                    })
-                /** This is what ends up in our JWT */
-                
 
                 /** Assigns payload to req.user */
                 req.login(payload, { session: true }, (error) => {
                     if (error) {
                         res.send('error');
                     }
-
                     /** Generate a signed json web token and return it in the response */
                     const token = jwt.sign(JSON.stringify(payload), keys.secret);
 
                     /** Assign our jwt to the cookie */
                     res.cookie('jwt', token, { httpOnly: true, secure: false, maxAge: 1800000 });
                     req.session.lastActivity = Date.now().toString()
-
-                    res.redirect('/')
-
+                    if (user.userType == "admin") {
+                        res.redirect('/admin/dashboard')
+                    } else {
+                        res.redirect('/')
+                    }
                 });
-
             }
-
-
         },
     )(req, res);
 });
@@ -181,7 +175,6 @@ router.get('/account',
         const { username, userID } = user
 
         req.session.lastActivity = Date.now()
-
 
         pool.execute('SELECT * FROM users WHERE username=?', [username],
             (error, results, fields) => {
@@ -209,11 +202,16 @@ router.get('/account',
                                             registerDate: newReg.toDateString(),
                                             sessionedRender: true
                                         })
-                                    })
-                            })
-                    })
-            })
-    })
+                                    }
+                                )
+                            }
+                        )
+                    }
+                )
+            }
+        )
+    }
+)
 
 router.get('/account/edit',
     passport.authenticate('jwt', { session: true, failureRedirect: '/login' }),
@@ -233,8 +231,10 @@ router.get('/account/edit',
                     email,
                     sessionedRender: true
                 })
-            })
-    })
+            }
+        )
+    }
+)
 
 router.post('/account/edit',
     passport.authenticate('jwt', { session: true, failureRedirect: '/login' }),
@@ -277,10 +277,10 @@ router.post('/account/edit',
                     req.flash("success_msg", "Account Updated")
                     res.redirect('/account')
                 });
-
-
-            })
-    })
+            }
+        )
+    }
+)
 
 router.get('/users/delete',
     passport.authenticate('jwt', { session: true, failureRedirect: '/login' }),

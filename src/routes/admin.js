@@ -60,30 +60,6 @@ router.get('/admin/dashboard',
                                             const { numOfRooms } = results[0]
                                             pool.execute('SELECT users.userID,fname,lname,username,email,COUNT(DISTINCT(Rooms.roomID)) AS numOfRooms, COUNT(DISTINCT(Devices.deviceID)) AS numOfDevices,registerDate,lastLogIn,lastLogOut,MAX(CAST(JSON_EXTRACT(data,"$.lastActivity") AS UNSIGNED)) as lastActivity FROM users LEFT JOIN sessions on users.userID = JSON_EXTRACT(data,"$.passport.user") LEFT JOIN Devices ON Devices.userID = users.userID LEFT JOIN Rooms ON Rooms.userID = users.userID  WHERE userType="user" GROUP BY users.userID;', [],
                                                 (errors, results, fields) => {
-                                                    // var newArray = results
-
-                                                    // for (i = 1; i < results.length; i++) {
-                                                    //     // console.log(results[i])
-                                                    //     console.log(i)
-                                                    //     if (results[i - 1].username === results[i].username) {
-                                                    //         if (new Date(results[i - 1].lastActivity).valueOf() < new Date(results[i].lastActivity).valueOf()) {
-                                                    //             let value = results[i - 1].lastActivity
-                                                    //             results = results.filter(function (item) {
-                                                    //                 return item.lastActivity != value
-                                                    //             })
-
-                                                    //         } else {
-                                                    //             let value = results[i].lastActivity
-                                                    //             results = results.filter(function (item) {
-                                                    //                 return item.lastActivity != value
-                                                    //             })
-
-                                                    //         }
-                                                    //     }
-
-                                                    // }
-                                                    // console.log(results)
-
                                                     //If you ever see this code please forgive me im young and naive 
                                                     for (k = 0; k < results.length; k++) {
 
@@ -103,7 +79,7 @@ router.get('/admin/dashboard',
                                                         results[k].lastLogIn = getDateTime(results[k].lastLogIn)
                                                     }
                                                     const users = results
-                                                   
+
                                                     pool.execute('SELECT username,messageDate,userID,name,Contact.email,message FROM Contact LEFT JOIN users ON Contact.email = users.email;',
                                                         (erros, results, fields) => {
                                                             for (k = 0; k < results.length; k++) {
@@ -150,8 +126,12 @@ router.post('/admin/login', (req, res) => {
                 req.flash("error_msg", "Wrong Username or Password")
                 res.redirect('/admin/login')
             } else {
+                pool.execute('UPDATE users SET lastLogIn=? WHERE userID=?', [new Date(), user.userID],
+                    (errors, results, fields) => {
+                        if (errors) throw errors;
+                    }
+                )
                 /** This is what ends up in our JWT */
-                //DONT PASS SENSITIVE INFO ON JWT PAYLOAD FIXX
                 const payload = {
                     username: user.username,
                     userID: user.userID,

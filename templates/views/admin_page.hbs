@@ -56,9 +56,11 @@
                             <h3 id="fullname">{{fname}} {{lname}}</h3>
                             <p id="username">Username: <span style="font-style: italic;">{{username}}</span></p>
                             <p id="user_email">E-mail: <span style="font-style: italic;">{{email}}</span></p>
-                            <p id="Allusers">Total number of users: <span style="font-style: italic;">{{numOfUsers}}</span>
+                            <p id="Allusers">Total number of users: <span
+                                    style="font-style: italic;">{{numOfUsers}}</span>
                             </p>
-                            <p id="Allrooms">Total nuumber of rooms: <span style="font-style: italic;">{{numOfRooms}}</span>
+                            <p id="Allrooms">Total nuumber of rooms: <span
+                                    style="font-style: italic;">{{numOfRooms}}</span>
                             </p>
                             <p id="Alldevices">Total number of devices: <span
                                     style="font-style: italic;">{{numOfDevices}}</span></p>
@@ -170,20 +172,12 @@
                             <th>Message</th>
                         </tr>
                         {{>admin_Messages_Renderer}}
-                        
-
                     </table>
-
-
                 </div>
-
-
-
             </div>
-
+            {{>footer_mini}}
         </div>
 
-        {{>footer_mini}}
 
 
     </div>
