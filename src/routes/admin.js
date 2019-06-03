@@ -129,14 +129,12 @@ router.post('/admin/login', (req, res) => {
                 pool.execute('UPDATE users SET lastLogIn=? WHERE userID=?', [new Date(), user.userID],
                     (errors, results, fields) => {
                         if (errors) throw errors;
+                        console.log(user.username + ' with ID ' + user.userID + ' has logged in at ' + Date.toDateString())
                     }
                 )
                 /** This is what ends up in our JWT */
                 const payload = {
-                    username: user.username,
-                    userID: user.userID,
-                    fname: user.fname,
-                    userType: user.userType
+                    userID: user.userID
                 };
 
                 /** assigns payload to req.user */
@@ -147,6 +145,7 @@ router.post('/admin/login', (req, res) => {
 
                     /** generate a signed json web token and return it in the response */
                     const token = jwt.sign(JSON.stringify(payload), keys.secret);
+
 
                     /** assign our jwt to the cookie */
                     res.cookie('jwt', token, { httpOnly: true, secure: false, maxAge: 1800000 });

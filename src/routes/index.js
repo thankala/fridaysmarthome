@@ -9,6 +9,7 @@ const validator = require('validator')
 router.get('/', (req, res) => {
     if (req.cookies.jwt) {
         req.session.lastActivity = Date.now().toString()
+        // console.log(req.user)
         const { fname } = req.user
 
         res.render('index', {

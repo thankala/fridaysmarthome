@@ -134,14 +134,12 @@ router.post('/login', (req, res) => {
                 pool.execute('UPDATE users SET lastLogIn=? WHERE userID=?', [new Date(), user.userID],
                     (errors, results, fields) => {
                         if (errors) throw errors;
+                        console.log(user.username + ' with ID ' + user.userID + ' has logged in at ' + new Date().toDateString())
                     }
                 )
                 /** This is what ends up in our JWT */
                 const payload = {
-                    username: user.username,
-                    userID: user.userID,
-                    fname: user.fname,
-                    userType: user.userType
+                    userID: user.userID
                 };
 
                 /** Assigns payload to req.user */
@@ -155,6 +153,7 @@ router.post('/login', (req, res) => {
                     /** Assign our jwt to the cookie */
                     res.cookie('jwt', token, { httpOnly: true, secure: false, maxAge: 1800000 });
                     req.session.lastActivity = Date.now().toString()
+
                     if (user.userType == "admin") {
                         res.redirect('/admin/dashboard')
                     } else {
@@ -174,11 +173,13 @@ router.get('/account',
         const { user } = req
         const { username, userID } = user
 
-        req.session.lastActivity = Date.now()
+
+        req.session.lastActivity = Date.now().toString()
 
         pool.execute('SELECT * FROM users WHERE username=?', [username],
             (error, results, fields) => {
                 if (error) throw error
+
                 const { fname, lname, email, registerDate } = results[0]
                 const newReg = new Date(registerDate)
                 pool.execute('SELECT COUNT(roomID) AS numOfRooms FROM Rooms WHERE userID = ?', [userID],
@@ -251,10 +252,7 @@ router.post('/account/edit',
                 }
 
                 const payload = {
-                    username: username,
-                    userID: user.userID,
-                    userType: user.userType,
-                    fname: fname
+                    userID: user.userID
                 };
 
                 /* Loging Out The User And Loging him in with new credentials */

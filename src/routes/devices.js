@@ -24,6 +24,7 @@ router.get('/devices',
     (req, res) => {
         const { user } = req
         const { userID, fname } = user
+        console.log(req.user)
 
         req.session.lastActivity = Date.now().toString()
 

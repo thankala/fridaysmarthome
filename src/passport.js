@@ -45,7 +45,9 @@ module.exports = (passport) => {
         secretOrKey: secret,
     },
         (jwtPayload, done) => {
-            return done(null, jwtPayload);
+            pool.execute('SELECT username,userID,fname,userType FROM users WHERE userID=?', [jwtPayload.userID], (errors, results, fields) => {
+                return done(errors, results[0]);
+            })
         }
     ));
 
@@ -55,8 +57,8 @@ module.exports = (passport) => {
     })
 
     //Derialize user instance
-    passport.deserializeUser(function (id, done) {
-        pool.execute('SELECT username,userID,fname,userType FROM users WHERE userID=?', [id], (errors, results, fields) => {
+    passport.deserializeUser(function (userID, done) {
+        pool.execute('SELECT username,userID,fname,userType FROM users WHERE userID=?', [userID], (errors, results, fields) => {
             done(errors, results[0]);
         })
     })
