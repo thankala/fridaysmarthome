@@ -131,7 +131,6 @@ router.get('/devices/edit',
                 const device = results
                 pool.execute('SELECT roomID, longName as roomLongName, name as roomName, type as roomType From Rooms WHERE userID=?;', [userID],
                     (errors, results, fields) => {
-                        console.log(results)
                         res.render('edit_device', {
                             device,
                             sessionedRender: true,
