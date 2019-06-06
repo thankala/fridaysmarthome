@@ -129,7 +129,7 @@ router.post('/admin/login', (req, res) => {
                 pool.execute('UPDATE users SET lastLogIn=? WHERE userID=?', [new Date(), user.userID],
                     (errors, results, fields) => {
                         if (errors) throw errors;
-                        console.log(user.username + ' with ID ' + user.userID + ' has logged in at ' + Date.toDateString())
+                        console.log(user.username + ' with ID ' + user.userID + ' has logged in at ' + new Date().toDateString())
                     }
                 )
                 /** This is what ends up in our JWT */
