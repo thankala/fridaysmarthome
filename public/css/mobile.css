@@ -276,4 +276,12 @@
     .contact_wrapper {
         width: 70%!important;
     }
+
+    .section_1 , .section_2 , .section_3 , .section_4{
+        min-height: 600px
+    }
+
+    #home{
+        min-height: 1200px
+    } 
 }

@@ -28,6 +28,8 @@
 </head>
 
 <body onload="check_sidebar();" ;>
+    <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+
     <nav id="top-bar">
 
         {{>menu}}
@@ -60,8 +62,8 @@
                     <p><button type="submit">Add</button></p>
                 </form>
             </div>
+            {{>footer_mini}}
         </div>
-        {{footer_mini}}
     </div>
 
 </body>

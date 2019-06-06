@@ -80,4 +80,20 @@
     .app-title {
         flex-direction: column!important;
     }
+
+    .signup-screen-body {
+        padding:0
+    }
+        
+        .signup-form-group h6{
+            overflow-wrap: break-word;
+        }
+    .signup-form-group h6 span {
+         float: none; 
+         display: block;
+     }
+     .signup-form-group a {
+        margin-left: 0;
+    }
+
 }

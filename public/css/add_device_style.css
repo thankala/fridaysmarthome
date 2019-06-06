@@ -1,5 +1,5 @@
 .section_1 {
-    height: 100vh;
+    height: calc(100vh + 200px);
     background: white;
     color: #525252;
   }

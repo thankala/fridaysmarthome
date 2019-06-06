@@ -263,6 +263,9 @@ input[type="password"] {
   .login-form-control-name:nth-child(2) {
     margin-top: 40px;
   }
+  .login-form-group.buttons{
+    text-align: center;
+  }
 }
 
 /* 
