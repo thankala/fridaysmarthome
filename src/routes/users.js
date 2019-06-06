@@ -44,6 +44,7 @@ function checkUsername(username, callback) {
 //Register handler
 router.post('/register', (req, res) => {
     const { fname, lname, email, username, password, password2 } = req.body;
+    console.log(fname)
 
     //Server-side checks for correct credentials during user register
     if (!fname || !lname || !email || !username || !password || !password2) {

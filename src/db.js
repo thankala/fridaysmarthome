@@ -8,7 +8,8 @@ const pool = mysql.createPool({
   password,
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
+  charset:'utf8'
 })
 
 module.exports = pool;

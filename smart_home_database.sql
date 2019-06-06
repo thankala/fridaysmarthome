@@ -1,5 +1,5 @@
 DROP DATABASE IF EXISTS fridaysmarthome;
-CREATE DATABASE fridaysmarthome;
+CREATE DATABASE fridaysmarthome CHARACTER SET utf8 COLLATE utf8_general_ci;
 USE fridaysmarthome;
 SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS users;
@@ -75,4 +75,3 @@ ADD FOREIGN KEY (roomID) REFERENCES Rooms(roomID) ON DELETE CASCADE;
 INSERT INTO users (userID,username,password,userType,fname,lname,email,registerDate) VALUES(1,'admin','$2b$10$jwA22uGvdFEHmWNyahIRX.MJBPe8ENywpLHFS/zqpstteV.4dCseG','admin','admin','admin','admin@fridayadmin.com','2019-05-30 14:39:46');
 INSERT INTO users (userID,username,password,userType,fname,lname,email,registerDate) VALUES(2,'thankala','$2b$10$jwA22uGvdFEHmWNyahIRX.MJBPe8ENywpLHFS/zqpstteV.4dCseG','admin','admin','admin','akaframed@gmail.com','2019-05-30 14:39:46');
 INSERT INTO users (userID,username,password,userType,fname,lname,email,registerDate) VALUES(3,'baggelisp','$2b$10$jwA22uGvdFEHmWNyahIRX.MJBPe8ENywpLHFS/zqpstteV.4dCseG','admin','admin','admin','baggelisp@fridayadmin.com','2019-05-30 14:39:46');
-
