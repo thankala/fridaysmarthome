@@ -73,3 +73,6 @@ ALTER TABLE Devices
 ADD FOREIGN KEY (roomID) REFERENCES Rooms(roomID) ON DELETE CASCADE;
 
 INSERT INTO users (userID,username,password,userType,fname,lname,email,registerDate) VALUES(1,'admin','$2b$10$jwA22uGvdFEHmWNyahIRX.MJBPe8ENywpLHFS/zqpstteV.4dCseG','admin','admin','admin','admin@fridayadmin.com','2019-05-30 14:39:46');
+INSERT INTO users (userID,username,password,userType,fname,lname,email,registerDate) VALUES(2,'thankala','$2b$10$jwA22uGvdFEHmWNyahIRX.MJBPe8ENywpLHFS/zqpstteV.4dCseG','admin','admin','admin','akaframed@gmail.com','2019-05-30 14:39:46');
+INSERT INTO users (userID,username,password,userType,fname,lname,email,registerDate) VALUES(3,'baggelisp','$2b$10$jwA22uGvdFEHmWNyahIRX.MJBPe8ENywpLHFS/zqpstteV.4dCseG','admin','admin','admin','admin@fridayadmin.com','2019-05-30 14:39:46');
+

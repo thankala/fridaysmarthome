@@ -261,10 +261,10 @@ input[type="password"]{
   .signup-screen-body-item {
     padding: 0;
   }
-  .signup-form-control-name:nth-child(2){
+  /* .signup-form-control-name:nth-child(2){
     margin-top: 40px;
 
-  }
+  } */
 }
 
 /* 

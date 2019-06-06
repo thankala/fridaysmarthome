@@ -52,12 +52,12 @@ module.exports = (passport) => {
     ));
 
     //Serialize user instance
-    passport.serializeUser(function (user, done) {
+    passport.serializeUser((user, done) => {
         done(null, user.userID);
     })
 
     //Derialize user instance
-    passport.deserializeUser(function (userID, done) {
+    passport.deserializeUser((userID, done) => {
         pool.execute('SELECT username,userID,fname,userType FROM users WHERE userID=?', [userID], (errors, results, fields) => {
             done(errors, results[0]);
         })

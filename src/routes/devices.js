@@ -24,8 +24,7 @@ router.get('/devices',
     (req, res) => {
         const { user } = req
         const { userID, fname } = user
-        console.log(req.user)
-
+        
         req.session.lastActivity = Date.now().toString()
 
         pool.execute('SELECT Rooms.name as roomName, Rooms.longName as roomLongName,Rooms.type as roomType, Devices.type as deviceType, Devices.name as deviceName, Devices.deviceID as deviceID, Devices.state as deviceState, JSON_EXTRACT(`value`,CONCAT("$[",JSON_LENGTH(`value` ->> "$")-1,"]")) as deviceValue FROM Devices JOIN Rooms ON Devices.roomID = Rooms.roomID WHERE Devices.userID=?', [userID],
@@ -132,6 +131,7 @@ router.get('/devices/edit',
                 const device = results
                 pool.execute('SELECT roomID, longName as roomLongName, name as roomName, type as roomType From Rooms WHERE userID=?;', [userID],
                     (errors, results, fields) => {
+                        console.log(results)
                         res.render('edit_device', {
                             device,
                             sessionedRender: true,
