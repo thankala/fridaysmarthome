@@ -635,7 +635,7 @@ input[type="text"], input[type="password"] {
 }
 
 .image_thanos {
-  background-image: url(../images/person.jpg);
+  background-image: url(../images/thankala.jpg);
   height: 200px;
   width: 200px;
   border-radius: 100%;
@@ -643,6 +643,8 @@ input[type="text"], input[type="password"] {
   background-position: center;
   background-size: contain;
   float: left;
+  background-position-x: 10px;
+  background-size: cover;
 }
 
 .team_wrapper .fa {
