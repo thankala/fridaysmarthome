@@ -59,6 +59,9 @@ module.exports = (passport) => {
     //Derialize user instance
     passport.deserializeUser((userID, done) => {
         pool.execute('SELECT username,userID,fname,userType FROM users WHERE userID=?', [userID], (errors, results, fields) => {
+            if (results.length < 1) {
+                return done("Your user is banned. Please contact the site's administrators", null)
+            }
             done(errors, results[0]);
         })
     })
